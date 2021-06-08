@@ -5,8 +5,8 @@ export const PostContext = React.createContext();
 export const PostProvider = (props) => {
   const [posts, setPosts] = useState([]);
 
-    const getAllPublishedPosts = () => {
-    return fetch("/api/post/getAllPublishedPosts")
+    const getAll = () => {
+    return fetch("/api/post/GetAll")
       .then((res) => res.json())
       .then(setPosts);
   };
@@ -14,7 +14,7 @@ export const PostProvider = (props) => {
   
   
   return (
-    <PostContext.Provider value={{ posts, getAllPublishedPosts }}>
+    <PostContext.Provider value={{ posts, getAll }}>
       {props.children}
     </PostContext.Provider>
   );

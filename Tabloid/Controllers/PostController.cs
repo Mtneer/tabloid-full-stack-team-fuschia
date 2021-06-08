@@ -11,7 +11,7 @@ using Tabloid.Models;
 
 namespace Tabloid.Repositories
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
@@ -29,7 +29,7 @@ namespace Tabloid.Repositories
         }
 
         // GET: api/<PostController>
-        [HttpGet]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             return Ok(_postRepository.GetAllPublishedPosts());

@@ -8,7 +8,7 @@ using Tabloid.Models;
 using Tabloid.Utils;
 using Tabloid.Repositories;
 
-namespace TabloidMVC.Repositories
+namespace Tabloid.Repositories
 {
     public class PostRepository : BaseRepository, IPostRepository
     {
