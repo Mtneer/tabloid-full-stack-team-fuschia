@@ -2,12 +2,13 @@ import React, { useState, useEffect, createContext } from "react";
 import { Spinner } from "reactstrap";
 import firebase from "firebase/app";
 import "firebase/auth";
+import { useHistory } from "react-router-dom";
 
 export const UserProfileContext = createContext();
 
 export function UserProfileProvider(props) {
   const apiUrl = "/api/userprofile";
-
+  const history = useHistory()
   const userProfile = sessionStorage.getItem("userProfile");
   const [isLoggedIn, setIsLoggedIn] = useState(userProfile != null);
 
@@ -20,15 +21,8 @@ export function UserProfileProvider(props) {
 
   const login = (email, pw) => {
     return firebase.auth().signInWithEmailAndPassword(email, pw)
-      .then((signInResponse) => {
-        debugger
-        getUserProfile(signInResponse.user.uid)
-      })
-      .then((userProfile) => {
-        debugger
-        sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
-        setIsLoggedIn(true);
-      });
+      .then((signInResponse) => getUserProfile(signInResponse.user.uid))
+      ;
   };
 
   const logout = () => {
@@ -52,19 +46,17 @@ export function UserProfileProvider(props) {
 
   const getUserProfile = (firebaseUserId) => {
     return getToken().then((token) =>
-    {
-      debugger
       fetch(`${apiUrl}/${firebaseUserId}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`
         }
-      }).then(resp => resp.json())
-      .then(respones => {
-        debugger
-        console.log(respones)})
-      
-    });
+      })
+      .then(resp => resp.json()))
+      .then((userProfile) => {
+        sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
+        setIsLoggedIn(true);
+      });
   };
 
   const saveUser = (userProfile) => {
