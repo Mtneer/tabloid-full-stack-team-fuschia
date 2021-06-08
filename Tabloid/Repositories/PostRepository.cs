@@ -8,7 +8,7 @@ using Tabloid.Models;
 using Tabloid.Utils;
 using Tabloid.Repositories;
 
-namespace TabloidMVC.Repositories
+namespace Tabloid.Repositories
 {
     public class PostRepository : BaseRepository, IPostRepository
     {
@@ -93,7 +93,7 @@ namespace TabloidMVC.Repositories
             }
         }
 
-        public List<Post> GetPostsByUserId(int id)
+        public List<Post> GetPostsByUserId(int UserId)
         {
             using (var conn = Connection)
             {
@@ -105,7 +105,7 @@ namespace TabloidMVC.Repositories
                               p.CreateDateTime, p.PublishDateTime, p.IsApproved,
                               p.CategoryId, p.UserProfileId,
                               c.[Name] AS CategoryName,
-                              u.FirstName, u.LastName, u.DisplayName, 
+                              u.FirebaseUserId, u.FirstName, u.LastName, u.DisplayName, 
                               u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
                               ut.[Name] AS UserTypeName
@@ -113,10 +113,10 @@ namespace TabloidMVC.Repositories
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE IsApproved = 1 AND PublishDateTime<SYSDATETIME() AND UserProfileId = @id
+                        WHERE u.Id = @id
                         ORDER BY p.CreateDateTime DESC";
 
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@id", UserId);
                     var reader = cmd.ExecuteReader();
 
                     List<Post> posts = new List<Post>();
@@ -129,47 +129,6 @@ namespace TabloidMVC.Repositories
                     reader.Close();
 
                     return posts;
-                }
-            }
-        }
-
-        public Post GetUserPostById(int id, int userProfileId)
-        {
-            using (var conn = Connection)
-            {
-                conn.Open();
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                       SELECT p.Id, p.Title, p.Content, 
-                              p.ImageLocation AS HeaderImage,
-                              p.CreateDateTime, p.PublishDateTime, p.IsApproved,
-                              p.CategoryId, p.UserProfileId,
-                              c.[Name] AS CategoryName,
-                              u.FirstName, u.LastName, u.DisplayName, 
-                              u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
-                              u.UserTypeId, 
-                              ut.[Name] AS UserTypeName
-                         FROM Post p
-                              LEFT JOIN Category c ON p.CategoryId = c.id
-                              LEFT JOIN UserProfile u ON p.UserProfileId = u.id
-                              LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE p.id = @id AND p.UserProfileId = @userProfileId";
-
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Parameters.AddWithValue("@userProfileId", userProfileId);
-                    var reader = cmd.ExecuteReader();
-
-                    Post post = null;
-
-                    if (reader.Read())
-                    {
-                        post = NewPostFromReader(reader);
-                    }
-
-                    reader.Close();
-
-                    return post;
                 }
             }
         }
@@ -271,6 +230,7 @@ namespace TabloidMVC.Repositories
                 UserProfile = new UserProfile()
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                    FirebaseUserId = reader.GetString(reader.GetOrdinal("FirebaseUserId")),
                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                     LastName = reader.GetString(reader.GetOrdinal("LastName")),
                     DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),

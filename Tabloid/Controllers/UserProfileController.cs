@@ -6,17 +6,17 @@ using Tabloid.Repositories;
 
 namespace Tabloid.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
     {
         private readonly IUserProfileRepository _userProfileRepository;
-        private readonly IPostRepository _postRepository;
-        public UserProfileController(IUserProfileRepository userProfileRepository, IPostRepository postRepository)
+        //private readonly IPostRepository _postRepository;
+        public UserProfileController(IUserProfileRepository userProfileRepository)
         {
             _userProfileRepository = userProfileRepository;
-            _postRepository = postRepository;
+            //_postRepository = postRepository;
         }
 
         [HttpGet("{firebaseUserId}")]

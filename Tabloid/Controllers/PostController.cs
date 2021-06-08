@@ -11,7 +11,7 @@ using Tabloid.Models;
 
 namespace Tabloid.Repositories
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
@@ -28,6 +28,8 @@ namespace Tabloid.Repositories
             //_categoryRepository = categoryRepository;
         }
 
+        // This method is for the POSTS page.
+        // it GETs the full List of Posts from the database.
         // GET: api/<PostController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -35,22 +37,18 @@ namespace Tabloid.Repositories
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<PostController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // This method is for the MY POSTS page.
+        // It GETs a List of Posts from the database by the UserId in SessionStorage
+        // GET api/<PostController>/UserId
+        [HttpGet("MyPosts/{UserId}")]
+        public IActionResult MyPosts(int UserId)
         {
-            return "value";
+            var posts = _postRepository.GetPostsByUserId(UserId);
+            return Ok(posts);
         }
 
-        // GET api/<PostController>/firebaseUserId
-        [HttpGet("{firebaseUserId}")]
-        public void MyPostsIndex(int firebaseUserId)
-        {
-            //int currentUserId = GetCurrentUserProfileId();
-            //var posts = _postRepository.GetPostsByUserId(currentUserId);
-            //return Ok(posts);
-        }
-
+        // This method is for the POST DETAILS page.
+        // It GETs a Post from the database by the PostId
         // GET api/<PostController>/Details/id
         [HttpGet("/Details/{id}")]
         public void Details(int id)
