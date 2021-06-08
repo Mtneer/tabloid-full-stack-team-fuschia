@@ -93,13 +93,25 @@ namespace Tabloid.Repositories
             }
         }
 
+        // Define a public method to retrieve Posts from the database that correspond to a
+        // particular userId and return a list of posts.
         public List<Post> GetPostsByUserId(int UserId)
         {
+            // Define a variable to identify the database connection
+            // ("Connection" comes from the BaseRepository.cs)
             using (var conn = Connection)
             {
+                // Open the connection to the database.
                 conn.Open();
+                // Instantiate a variable called cmd to use as short-hand for defining the SQL query.
                 using (var cmd = conn.CreateCommand())
                 {
+                    // Define the SQL query. Select Post, Category, UserProfile, and UserType.
+                    // Join Category on Post via CategoryId
+                    // Join UserProfile on Post via UserProfileId
+                    // Join UserType on UserProfile via UserTypeId
+                    // Only Select Entries WHERE the UserId = the current user's Id
+                    // Order by descending (chronological) 
                     cmd.CommandText = @"SELECT p.Id, p.Title, p.Content, 
                               p.ImageLocation AS HeaderImage,
                               p.CreateDateTime, p.PublishDateTime, p.IsApproved,
@@ -116,18 +128,27 @@ namespace Tabloid.Repositories
                         WHERE u.Id = @id
                         ORDER BY p.CreateDateTime DESC";
 
+                    // Attach the UserId parameter to the SQL Query using SQLConnection provided methods
                     cmd.Parameters.AddWithValue("@id", UserId);
+
+                    // Execute the Query
                     var reader = cmd.ExecuteReader();
 
+                    // Instantiate a new list of posts
                     List<Post> posts = new List<Post>();
 
+                    // While there are new rows of entries in the reader,
                     while (reader.Read())
                     {
+                        // Use the defined method "NewPostFromReader" (defined below)
+                        // to add a new Post object to the List of Posts
                         posts.Add(NewPostFromReader(reader));
                     }
 
+                    // Close the connection to the database
                     reader.Close();
 
+                    // return the list of posts
                     return posts;
                 }
             }
@@ -220,6 +241,7 @@ namespace Tabloid.Repositories
                 ImageLocation = DbUtils.GetNullableString(reader, "HeaderImage"),
                 CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                 PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
+                IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
                 CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
                 Category = new Category()
                 {

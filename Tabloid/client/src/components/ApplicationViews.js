@@ -4,6 +4,8 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+import { PostProvider } from "../providers/PostProvider";
+import MyPosts from "./MyPosts";
 
 export default function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -13,6 +15,12 @@ export default function ApplicationViews() {
       <Switch>
         <Route path="/" exact>
           {isLoggedIn ? <Hello /> : <Redirect to="/login" />}
+        </Route>
+        
+        <Route path="/myposts" exact>
+          <PostProvider >
+            {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
+          </PostProvider>
         </Route>
 
         <Route path="/login">
