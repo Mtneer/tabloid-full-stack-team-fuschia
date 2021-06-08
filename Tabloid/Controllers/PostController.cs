@@ -30,9 +30,9 @@ namespace Tabloid.Repositories
 
         // GET: api/<PostController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult GetAll()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_postRepository.GetAllPublishedPosts());
         }
 
         // GET api/<PostController>/5

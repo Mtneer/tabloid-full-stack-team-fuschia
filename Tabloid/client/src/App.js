@@ -8,6 +8,7 @@ function App() {
   return (
     <Router>
       <UserProfileProvider>
+        
         <Header />
         <ApplicationViews />
       </UserProfileProvider>
