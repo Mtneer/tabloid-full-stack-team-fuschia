@@ -3,7 +3,7 @@ import { Card, CardImg, CardBody, CardHeader } from "reactstrap";
 
 const Post = ({ post }) => {
   return (
-    <Card className="m-4">
+    <Card className="m-8">
         <CardHeader>
             <p><strong>{post.title}</strong></p>
         </CardHeader>
