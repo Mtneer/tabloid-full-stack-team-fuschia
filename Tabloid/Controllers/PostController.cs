@@ -11,7 +11,7 @@ using Tabloid.Models;
 
 namespace Tabloid.Repositories
 {
-    
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
@@ -70,11 +70,10 @@ namespace Tabloid.Repositories
 
         // POST api/<PostController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Post post)
         {
-            //var vm = new PostCreateViewModel();
-            //vm.CategoryOptions = _categoryRepository.GetAll();
-            //return Ok();
+            _postRepository.Add(post);
+            return CreatedAtAction("Get", new { id = post.Id }, post);
         }
 
         // PUT api/<PostController>/5
