@@ -12,7 +12,7 @@ using Tabloid.Models;
 namespace Tabloid.Repositories
 {
     // Use the Authorize tag to require user authorization to any of the controller methods
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase

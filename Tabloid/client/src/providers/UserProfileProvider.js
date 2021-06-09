@@ -21,8 +21,15 @@ export function UserProfileProvider(props) {
 
   const login = (email, pw) => {
     return firebase.auth().signInWithEmailAndPassword(email, pw)
-      .then((signInResponse) => getUserProfile(signInResponse.user.uid));
-  };
+      .then((signInResponse) => {
+        debugger
+        getUserProfile(signInResponse.user.uid)})
+      .then((userProfile) => {
+        debugger
+        sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
+        setIsLoggedIn(true);
+      });
+    }
 
   const logout = () => {
     return firebase.auth().signOut()
@@ -52,10 +59,7 @@ export function UserProfileProvider(props) {
         }
       })
       .then(resp => resp.json()))
-      .then((userProfile) => {
-        sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
-        setIsLoggedIn(true);
-      });
+      
   };
 
   const saveUser = (userProfile) => {
