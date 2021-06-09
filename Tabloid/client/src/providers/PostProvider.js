@@ -52,9 +52,21 @@ export const PostProvider = (props) => {
       throw new Error("Unauthorized");
     }));
   };
+  
+  const deletePost = (postId) => {
+    getToken().then((token) =>
+        fetch(`${apiUrl}/${postId}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+    }).then(resp => resp.json())
+    );
+  };
 
   return (
-    <PostContext.Provider value={{ posts, myposts, getAllPosts, getUserPosts, addPost }}>
+    <PostContext.Provider value={{ posts, myposts, getAllPosts, getUserPosts, addPost, deletePost }}>
       {props.children}
     </PostContext.Provider>
   );

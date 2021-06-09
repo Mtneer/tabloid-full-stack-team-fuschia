@@ -49,7 +49,7 @@ namespace Tabloid.Repositories
             // repository to retrieve all of the posts in the database
             // that have the same Post.UserId as the User who is currently
             // logged in (retrieve current User's Id from SessionStorage 
-            // on client-side.
+            // on client-side.)
             var posts = _postRepository.GetPostsByUserId(UserId);
             return Ok(posts);
         }
@@ -99,17 +99,10 @@ namespace Tabloid.Repositories
 
         // DELETE api/<PostController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            //try
-            //{
-            //    _postRepository.Delete(id);
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch
-            //{
-            //    return Ok();
-            //}
+            _postRepository.Delete(id);
+            return NoContent();
         }
 
         private UserProfile GetCurrentUserProfileId()

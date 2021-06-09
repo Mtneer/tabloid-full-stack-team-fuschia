@@ -1,7 +1,13 @@
 import React from "react";
-import { Card, CardImg, CardBody, CardHeader } from "reactstrap";
+import {useHistory} from "react-router-dom";
+import { Card, CardImg, CardBody, CardHeader, Button } from "reactstrap";
 
 export const Post = ({ post }) => {
+  const isCurrentUserPost = JSON.parse(sessionStorage.getItem("userProfile")).id === post.userProfileId;
+ 
+  const history = useHistory();
+  // console.log(history)
+
     return (
     <Card className="m-8">
         <CardHeader>
@@ -17,6 +23,14 @@ export const Post = ({ post }) => {
                   <p key={comment.Id}>{comment.message}</p>
               ))}
               </div> */}
+           
+          <div>
+            {isCurrentUserPost 
+              ? <Button onClick={() => {history.push(`/post/delete/${post.id}`)}}>Delete</Button> 
+              : <div></div>
+            }
+          </div>
+             
         </CardBody>
     </Card>
     

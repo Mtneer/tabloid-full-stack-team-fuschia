@@ -7,6 +7,7 @@ import Register from "./Register";
 import Hello from "./Hello";
 import { PostProvider } from "../providers/PostProvider";
 import MyPosts from "./MyPosts";
+import ConfirmDelete from "./ConfirmDelete";
 
 export default function ApplicationViews() {
   // import the isLoggedIn state variable from the UserProfileContext
@@ -28,9 +29,7 @@ export default function ApplicationViews() {
         manage what the user sees based on their login status. If they are logged in,
         display their posts. If not, redirect them to the login page*/}
         <Route path="/myposts" exact>
-          <PostProvider >
-            {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
-          </PostProvider>
+          {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
         </Route>
 
         {/* Define the Login path as "/login". */}
@@ -43,8 +42,12 @@ export default function ApplicationViews() {
           <Register />
         </Route>
 
-        <Route path="/post">
+        <Route exact path="/post">
           <PostList />
+        </Route>
+
+        <Route exact path="/post/delete/:postId">
+          <ConfirmDelete />
         </Route>
       </Switch>
     </main>
