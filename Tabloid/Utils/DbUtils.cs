@@ -127,7 +127,6 @@ namespace Tabloid.Utils
         {
             return value ?? DBNull.Value;
         }
-
         public static string GetNullableString(SqlDataReader reader, string column)
         {
             var ordinal = reader.GetOrdinal(column);
