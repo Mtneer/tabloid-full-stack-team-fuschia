@@ -51,19 +51,14 @@ namespace Tabloid.Repositories
         // It GETs a Post from the database by the PostId
         // GET api/<PostController>/Details/id
         [HttpGet("/Details/{id}")]
-        public void Details(int id)
+        public IActionResult Get(int id)
         {
-            //var post = _postRepository.GetPublishedPostById(id);
-            //if (post == null)
-            //{
-            //    int userId = GetCurrentUserProfileId();
-            //    post = _postRepository.GetUserPostById(id, userId);
-            //    if (post == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //}
-            //return Ok(post);
+            var post = _postRepository.GetById(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+            return Ok(post);
         }
 
         // POST api/<PostController>
