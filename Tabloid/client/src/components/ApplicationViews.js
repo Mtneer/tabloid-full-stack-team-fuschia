@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
+import { PostList } from "./PostList";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
@@ -21,6 +22,10 @@ export default function ApplicationViews() {
 
         <Route path="/register">
           <Register />
+        </Route>
+
+        <Route path="/post">
+          <PostList />
         </Route>
       </Switch>
     </main>
