@@ -11,16 +11,18 @@ using Tabloid.Models;
 
 namespace Tabloid.Repositories
 {
+    // Use the Authorize tag to require user authorization to any of the controller methods
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
     {
-
+        // Define private properties for the PostController to link the relevant repositories.
         private readonly IPostRepository _postRepository;
         private readonly IUserProfileRepository _userProfileRepository;
         //private readonly ICategoryRepository _categoryRepository;
 
+        // Create a Constructor Method to instantiate the controller
         public PostController(IPostRepository postRepository, IUserProfileRepository userProfileRepository)
         {
             _postRepository = postRepository;
@@ -28,6 +30,8 @@ namespace Tabloid.Repositories
             //_categoryRepository = categoryRepository;
         }
 
+        // This method is for the POSTS page.
+        // it GETs the full List of Posts from the database.
         // GET: api/<PostController>
         [HttpGet("GetAll")]
         public IActionResult GetAll()
@@ -35,22 +39,23 @@ namespace Tabloid.Repositories
             return Ok(_postRepository.GetAllPublishedPosts());
         }
 
-        // GET api/<PostController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // This method is for the MY POSTS page.
+        // It GETs a List of Posts from the database by the UserId in SessionStorage
+        // GET api/<PostController>/UserId
+        [HttpGet("MyPosts/{UserId}")]
+        public IActionResult MyPosts(int UserId)
         {
-            return "value";
+            // Use the "GetPostsByUserId" method in the PostRepository.cs
+            // repository to retrieve all of the posts in the database
+            // that have the same Post.UserId as the User who is currently
+            // logged in (retrieve current User's Id from SessionStorage 
+            // on client-side.
+            var posts = _postRepository.GetPostsByUserId(UserId);
+            return Ok(posts);
         }
 
-        // GET api/<PostController>/firebaseUserId
-        [HttpGet("{firebaseUserId}")]
-        public void MyPostsIndex(int firebaseUserId)
-        {
-            //int currentUserId = GetCurrentUserProfileId();
-            //var posts = _postRepository.GetPostsByUserId(currentUserId);
-            //return Ok(posts);
-        }
-
+        // This method is for the POST DETAILS page.
+        // It GETs a Post from the database by the PostId
         // GET api/<PostController>/Details/id
         [HttpGet("/Details/{id}")]
         public void Details(int id)

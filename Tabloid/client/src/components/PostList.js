@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { PostContext } from "../providers/PostProvider";
-import {PostObject} from "./Post";
+import { Post } from "./Post";
 
 export const PostList = () => {
-  const {posts, getAll } = useContext(PostContext);
+  const { posts, getAllPosts } = useContext(PostContext);
 
   useEffect(() => {
-    getAll();
+    getAllPosts();
   }, []);
 
   return (
@@ -14,7 +14,7 @@ export const PostList = () => {
       <div className="row justify-content-center">
         <div className="cards-column">
           {posts.map((post) => (
-            <PostObject key={post.id} post={post} />
+            <Post key={post.id} post={post} />
           ))}
         </div>
       </div>

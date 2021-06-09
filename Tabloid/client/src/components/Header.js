@@ -12,8 +12,16 @@ import {
 import { UserProfileContext } from "../providers/UserProfileProvider";
 
 export default function Header() {
+  // import the isLoggedIn state variable and logout function from
+  // the UserProfileContext
   const { isLoggedIn, logout } = useContext(UserProfileContext);
+  
+  // Define a state variable and function to manage the dropdown
+  // menu functionality
   const [isOpen, setIsOpen] = useState(false);
+
+  // Define a toggle method to change the state of isOpen variable 
+  // when the user engages with the dropdown menu
   const toggle = () => setIsOpen(!isOpen);
 
   return (
@@ -23,19 +31,23 @@ export default function Header() {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            { /* When isLoggedIn === true, we will render the Home link */ }
+            { /* When isLoggedIn === true, we will render the Main App Navigation Links */ }
             {isLoggedIn &&
-            <>
-              <NavItem>
-                <NavLink tag={RRNavLink} to="/">Home</NavLink>
-              </NavItem>
-              <NavItem>
-              <NavLink tag={RRNavLink} to="/post">Post</NavLink>
-            </NavItem>
-            </>
+              <>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/">Home</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/post">Posts</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/myposts">My Posts</NavLink>
+                </NavItem>
+              </>
             }
           </Nav>
           <Nav navbar>
+            {/* When isLoggedIn === true, we will separately render the Logout button */}
             {isLoggedIn &&
               <>
                 <NavItem>
@@ -44,6 +56,7 @@ export default function Header() {
                 </NavItem>
               </>
             }
+            {/* When isLoggedIn === false, we will render the Login and Register buttons */}
             {!isLoggedIn &&
               <>
                 <NavItem>

@@ -11,6 +11,5 @@ namespace Tabloid.Repositories
         List<Post> GetAllPublishedPosts();
         List<Post> GetPostsByUserId(int id);
         Post GetPublishedPostById(int id);
-        Post GetUserPostById(int id, int userProfileId);
     }
 }
