@@ -11,16 +11,18 @@ using Tabloid.Models;
 
 namespace Tabloid.Repositories
 {
-    //[Authorize]
+    // Use the Authorize tag to require user authorization to any of the controller methods
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
     {
-
+        // Define private properties for the PostController to link the relevant repositories.
         private readonly IPostRepository _postRepository;
         private readonly IUserProfileRepository _userProfileRepository;
         //private readonly ICategoryRepository _categoryRepository;
 
+        // Create a Constructor Method to instantiate the controller
         public PostController(IPostRepository postRepository, IUserProfileRepository userProfileRepository)
         {
             _postRepository = postRepository;
@@ -31,10 +33,10 @@ namespace Tabloid.Repositories
         // This method is for the POSTS page.
         // it GETs the full List of Posts from the database.
         // GET: api/<PostController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_postRepository.GetAllPublishedPosts());
         }
 
         // This method is for the MY POSTS page.
@@ -43,6 +45,11 @@ namespace Tabloid.Repositories
         [HttpGet("MyPosts/{UserId}")]
         public IActionResult MyPosts(int UserId)
         {
+            // Use the "GetPostsByUserId" method in the PostRepository.cs
+            // repository to retrieve all of the posts in the database
+            // that have the same Post.UserId as the User who is currently
+            // logged in (retrieve current User's Id from SessionStorage 
+            // on client-side.
             var posts = _postRepository.GetPostsByUserId(UserId);
             return Ok(posts);
         }
