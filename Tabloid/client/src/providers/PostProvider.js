@@ -7,7 +7,7 @@ export const PostProvider = (props) => {
   const apiUrl = "/api/Post";
   const { getToken } = useContext(UserProfileContext);
   
-  const [posts, setPosts] = useState([]);
+  const [ posts, setPosts ] = useState([]);
 
   const getAllPosts = () => {
     getToken().then((token) =>
@@ -51,7 +51,6 @@ export const PostProvider = (props) => {
       throw new Error("Unauthorized");
     }));
   };
-
 
   return (
     <PostContext.Provider value={{ posts, getAllPosts, getUserPosts, addPost }}>

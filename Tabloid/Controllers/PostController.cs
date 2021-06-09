@@ -33,10 +33,10 @@ namespace Tabloid.Repositories
         // This method is for the POSTS page.
         // it GETs the full List of Posts from the database.
         // GET: api/<PostController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_postRepository.GetAllPublishedPosts());
         }
 
         // This method is for the MY POSTS page.
