@@ -40,21 +40,36 @@ export const PostProvider = (props) => {
   };
 
   const addPost = (post) => {
-    getToken().then((token) =>
+    return getToken().then((token) =>
         fetch(apiUrl, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify(post),
+            body: JSON.stringify(post)
     }).then(resp => {
+      // debugger
       if (resp.ok) {
         return resp.json();
       }
       throw new Error("Unauthorized");
     }));
   };
+
+  const getPostById = (postId) => {
+    return getToken().then((token) =>
+        fetch(`${apiUrl}/Details/${postId}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }))
+      
+      
+  }
+
+  
   
   // Provider method to edit a post by sending a PUT request based on a Post Object
   // to the Web API with a firebase Token for authentication.
@@ -90,6 +105,7 @@ export const PostProvider = (props) => {
 
   return (
     <PostContext.Provider value={{ posts, myposts, getAllPosts, getUserPosts, addPost, editPost, deletePost }}>
+    <PostContext.Provider value={{ posts, myposts, getAllPosts, getPostById, getUserPosts, addPost, deletePost }}>
       {props.children}
     </PostContext.Provider>
   );

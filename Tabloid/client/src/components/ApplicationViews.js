@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
+import { PostProvider } from "../providers/PostProvider";
 import { PostList } from "./PostList";
+import { PostForm } from "./PostForm";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
-import { PostProvider } from "../providers/PostProvider";
 import MyPosts from "./MyPosts";
 import ConfirmDelete from "./ConfirmDelete";
+import { PostDetails } from "./PostDetails";
 
 export default function ApplicationViews() {
   // import the isLoggedIn state variable from the UserProfileContext
@@ -43,11 +45,19 @@ export default function ApplicationViews() {
         </Route>
 
         <Route exact path="/post">
-          <PostList />
+          {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/postform">
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/postdetails/:postId(\d+)">
+          {isLoggedIn ? <PostDetails/> : <Redirect to="/login" />}
         </Route>
 
         <Route exact path="/post/delete/:postId">
-          <ConfirmDelete />
+          {isLoggedIn ? <ConfirmDelete /> : <Redirect to="/login" />}
         </Route>
       </Switch>
     </main>
