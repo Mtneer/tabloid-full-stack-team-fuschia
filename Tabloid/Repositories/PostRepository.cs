@@ -51,14 +51,18 @@ namespace Tabloid.Repositories
                 }
             }
         }
-
+        // Method to retrieve details of post.
         public Post GetById(int id)
         {
+            // Define a variable to identify the database connection
+            // ("Connection" comes from the BaseRepository.cs)
             using (var conn = Connection)
             {
                 conn.Open();
+                // Open the connection to the database.
                 using (var cmd = conn.CreateCommand())
                 {
+                    // Instantiate a variable called cmd to use as short-hand for defining the SQL query.
                     cmd.CommandText = @"
                        SELECT p.Id, p.Title, p.Content, 
                               p.ImageLocation AS HeaderImage,
@@ -75,8 +79,9 @@ namespace Tabloid.Repositories
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
                         WHERE IsApproved = 1 AND PublishDateTime < SYSDATETIME()
                               AND p.id = @id";
-
+                    // Attach the UserId parameter to the SQL Query using SQLConnection provided methods
                     cmd.Parameters.AddWithValue("@id", id);
+                    // Execute the Query
                     var reader = cmd.ExecuteReader();
 
                     Post post = null;
