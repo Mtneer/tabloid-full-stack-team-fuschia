@@ -7,6 +7,7 @@ import Register from "./Register";
 import Hello from "./Hello";
 import { PostProvider } from "../providers/PostProvider";
 import MyPosts from "./MyPosts";
+import { PostDetails } from "./PostDetails";
 
 export default function ApplicationViews() {
   // import the isLoggedIn state variable from the UserProfileContext
@@ -46,6 +47,12 @@ export default function ApplicationViews() {
         <Route path="/post">
           <PostList />
         </Route>
+        <PostProvider>
+          <Route path="/postdetails/:postId(\d+)">
+          
+            <PostDetails/> 
+          </Route>
+        </PostProvider>
       </Switch>
     </main>
   );

@@ -57,7 +57,7 @@ namespace Tabloid.Repositories
         // This method is for the POST DETAILS page.
         // It GETs a Post from the database by the PostId
         // GET api/<PostController>/Details/id
-        [HttpGet("/Details/{id}")]
+        [HttpGet("Details/{id}")]
         public IActionResult Get(int id)
         {
             var post = _postRepository.GetById(id);
