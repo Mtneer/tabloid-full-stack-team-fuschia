@@ -12,7 +12,7 @@ using Tabloid.Models;
 namespace Tabloid.Repositories
 {
     // Use the Authorize tag to require user authorization to any of the controller methods
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
@@ -83,18 +83,11 @@ namespace Tabloid.Repositories
         }
 
         // PUT api/<PostController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromBody] Post post)
         {
-            //try
-            //{
-            //    _postRepository.Edit(post);
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+            _postRepository.Edit(post);
+            return NoContent();
         }
 
         // DELETE api/<PostController>/5
@@ -103,12 +96,6 @@ namespace Tabloid.Repositories
         {
             _postRepository.Delete(id);
             return NoContent();
-        }
-
-        private UserProfile GetCurrentUserProfileId()
-        {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

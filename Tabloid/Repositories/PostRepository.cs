@@ -216,7 +216,8 @@ namespace Tabloid.Repositories
                                             Content = @content,
                                             CategoryId = @categoryId,
                                             ImageLocation = @imageLocation,
-                                            PublishDateTime = @publishDate
+                                            PublishDateTime = @publishDate,
+                                            IsApproved = @isApproved
                                         WHERE Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", post.Id);
@@ -224,7 +225,7 @@ namespace Tabloid.Repositories
                     cmd.Parameters.AddWithValue("@content", post.Content);
                     cmd.Parameters.AddWithValue("@categoryId", post.CategoryId);
                     cmd.Parameters.AddWithValue("@imageLocation", post.ImageLocation);
-                    cmd.Parameters.AddWithValue("@publishDate", post.PublishDateTime);
+                    cmd.Parameters.Add("@isApproved", SqlDbType.Bit).Value = post.IsApproved;
 
                     cmd.ExecuteNonQuery();
                 }
