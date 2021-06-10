@@ -21,7 +21,10 @@ export function UserProfileProvider(props) {
 
   const login = (email, pw) => {
     return firebase.auth().signInWithEmailAndPassword(email, pw)
-      .then((signInResponse) => getUserProfile(signInResponse.user.uid));
+      .then((signInResponse) => { 
+        debugger
+       return getUserProfile(signInResponse.user.uid)
+      });
   };
 
   const logout = () => {
@@ -70,8 +73,12 @@ export function UserProfileProvider(props) {
       }).then(resp => resp.json()));
   };
 
+  const getPost = (id) => {
+    return fetch(`/api/post/${id}`).then((res) => res.json());
+};
+
   return (
-    <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken }}>
+    <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken, getPost }}>
       {isFirebaseReady
         ? props.children
         : <Spinner className="app-spinner dark"/>}
