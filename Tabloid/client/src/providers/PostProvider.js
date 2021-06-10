@@ -37,15 +37,16 @@ export const PostProvider = (props) => {
   };
 
   const addPost = (post) => {
-    getToken().then((token) =>
+    return getToken().then((token) =>
         fetch(apiUrl, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify(post),
+            body: JSON.stringify(post)
     }).then(resp => {
+      debugger
       if (resp.ok) {
         return resp.json();
       }

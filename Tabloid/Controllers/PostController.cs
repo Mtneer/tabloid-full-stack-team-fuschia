@@ -13,7 +13,7 @@ using Tabloid.Repositories;
 namespace Tabloid.Controllers
 {
     // Use the Authorize tag to require user authorization to any of the controller methods
-    
+   
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
@@ -79,7 +79,7 @@ namespace Tabloid.Controllers
         public IActionResult Post(Post post)
         {
             _postRepository.Add(post);
-            return CreatedAtAction("Get", new { id = post.Id }, post);
+            return Ok( post);
         }
 
         // PUT api/<PostController>/5
