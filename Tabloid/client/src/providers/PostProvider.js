@@ -46,7 +46,7 @@ export const PostProvider = (props) => {
             },
             body: JSON.stringify(post)
     }).then(resp => {
-      debugger
+      // debugger
       if (resp.ok) {
         return resp.json();
       }
@@ -79,7 +79,7 @@ export const PostProvider = (props) => {
   };
 
   return (
-    <PostContext.Provider value={{ posts, myposts, getAllPosts, getUserPosts, addPost, getPostById }}>
+    <PostContext.Provider value={{ posts, myposts, getAllPosts, getPostById, getUserPosts, addPost, deletePost }}>
       {props.children}
     </PostContext.Provider>
   );

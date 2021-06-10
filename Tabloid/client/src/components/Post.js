@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { Card, CardImg, CardBody, CardHeader } from "reactstrap";
 import {useHistory} from "react-router-dom";
 import { Card, CardImg, CardBody, CardHeader, Button } from "reactstrap";
 

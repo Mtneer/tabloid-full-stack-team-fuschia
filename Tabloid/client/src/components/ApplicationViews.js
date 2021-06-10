@@ -45,21 +45,19 @@ export default function ApplicationViews() {
         </Route>
 
         <Route exact path="/post">
-          <PostList />
+          {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/postform">
-          <PostForm />
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
         </Route>
-        <PostProvider>
-          <Route path="/postdetails/:postId(\d+)">
-          
-            <PostDetails/> 
-          </Route>
-        </PostProvider>
+
+        <Route path="/postdetails/:postId(\d+)">
+          {isLoggedIn ? <PostDetails/> : <Redirect to="/login" />}
+        </Route>
 
         <Route exact path="/post/delete/:postId">
-          <ConfirmDelete />
+          {isLoggedIn ? <ConfirmDelete /> : <Redirect to="/login" />}
         </Route>
       </Switch>
     </main>
