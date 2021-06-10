@@ -6,12 +6,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Tabloid.Models;
+using Tabloid.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Tabloid.Repositories
+namespace Tabloid.Controllers
 {
     // Use the Authorize tag to require user authorization to any of the controller methods
+   
     
     [Route("api/[controller]")]
     [ApiController]
@@ -20,14 +22,14 @@ namespace Tabloid.Repositories
         // Define private properties for the PostController to link the relevant repositories.
         private readonly IPostRepository _postRepository;
         private readonly IUserProfileRepository _userProfileRepository;
-        //private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         // Create a Constructor Method to instantiate the controller
-        public PostController(IPostRepository postRepository, IUserProfileRepository userProfileRepository)
+        public PostController(IPostRepository postRepository, IUserProfileRepository userProfileRepository, ICategoryRepository categoryRepository)
         {
             _postRepository = postRepository;
             _userProfileRepository = userProfileRepository;
-            //_categoryRepository = categoryRepository;
+            _categoryRepository = categoryRepository;
         }
 
         // This method is for the POSTS page.
@@ -70,11 +72,10 @@ namespace Tabloid.Repositories
 
         // POST api/<PostController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Post post)
         {
-            //var vm = new PostCreateViewModel();
-            //vm.CategoryOptions = _categoryRepository.GetAll();
-            //return Ok();
+            _postRepository.Add(post);
+            return Ok( post);
         }
 
         // PUT api/<PostController>/5

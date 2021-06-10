@@ -162,6 +162,7 @@ namespace Tabloid.Repositories
 
         public void Add(Post post)
         {
+            post.CreateDateTime = DateTime.Now;
             using (var conn = Connection)
             {
                 conn.Open();

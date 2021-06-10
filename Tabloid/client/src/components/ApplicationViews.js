@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
+import { PostProvider } from "../providers/PostProvider";
 import { PostList } from "./PostList";
+import { PostForm } from "./PostForm";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
-import { PostProvider } from "../providers/PostProvider";
 import MyPosts from "./MyPosts";
 import { PostDetails } from "./PostDetails";
 
@@ -46,6 +47,10 @@ export default function ApplicationViews() {
 
         <Route path="/post">
           <PostList />
+        </Route>
+
+        <Route path="/postform">
+          <PostForm />
         </Route>
         <PostProvider>
           <Route path="/postdetails/:postId(\d+)">
