@@ -61,8 +61,7 @@ export const PostProvider = (props) => {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
-    }).then(resp => resp.json())
-    );
+    }));
   };
 
   return (

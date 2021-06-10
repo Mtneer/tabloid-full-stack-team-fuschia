@@ -8,13 +8,15 @@ export const ConfirmDelete = () => {
     const history = useHistory();
     return (
         <div className="container">
-        <div className="row justify-content-center">
-          <p>Are you sure you want to delete?</p>
-          <button onClick={() => {history.push("/post")}} className="modal_buttonCancel">Cancel</button>
-          <button onClick={() => {deletePost(postId); history.push("/post")}} className="modal_buttoDelete">
-            Confirm
-          </button>
-        </div>
+          <div className="row justify-content-center">
+            <h3>Are you sure you want to delete this post?</h3>
+          </div>
+          <div className="row justify-content-center">
+            <button onClick={() => {history.push("/post")}} className="buttonCancel">Cancel</button>
+            <button onClick={() => {deletePost(postId); history.push("/post")}} className="buttonDelete">
+              Confirm
+            </button>
+          </div>
       </div>
     );
   }
