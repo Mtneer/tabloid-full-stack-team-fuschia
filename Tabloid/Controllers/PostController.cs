@@ -12,7 +12,7 @@ using Tabloid.Models;
 namespace Tabloid.Repositories
 {
     // Use the Authorize tag to require user authorization to any of the controller methods
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
@@ -57,20 +57,15 @@ namespace Tabloid.Repositories
         // This method is for the POST DETAILS page.
         // It GETs a Post from the database by the PostId
         // GET api/<PostController>/Details/id
-        [HttpGet("/Details/{id}")]
-        public void Details(int id)
+        [HttpGet("Details/{id}")]
+        public IActionResult Get(int id)
         {
-            //var post = _postRepository.GetPublishedPostById(id);
-            //if (post == null)
-            //{
-            //    int userId = GetCurrentUserProfileId();
-            //    post = _postRepository.GetUserPostById(id, userId);
-            //    if (post == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //}
-            //return Ok(post);
+            var post = _postRepository.GetById(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+            return Ok(post);
         }
 
         // POST api/<PostController>
