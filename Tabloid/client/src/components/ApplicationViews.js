@@ -60,7 +60,7 @@ export default function ApplicationViews() {
         <Route path="/tags" exact>
           {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
         </Route>
-        
+
         <Route exact path="/post/delete/:postId">
           {isLoggedIn ? <ConfirmDelete /> : <Redirect to="/login" />}
         </Route>

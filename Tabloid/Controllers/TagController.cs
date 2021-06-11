@@ -22,8 +22,8 @@ namespace Tabloid.Controllers
         }
 
         // GET: api/<TagController>
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet]
+        public IActionResult Get()
         {
             return Ok(_tagRepository.GetAllTags());
         }
