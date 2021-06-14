@@ -13,10 +13,10 @@ export const ConfirmDelete = () => {
             <h3>Are you sure you want to delete this post?</h3>
           </div>
           <div className="row justify-content-center button-container">
-            <button className="button btn btn-sm" onClick={() => {deletePost(postId); history.push("/post")}}>
+            <button className="button btn btn-sm btn-primary" onClick={() => {deletePost(postId); history.push("/post")}}>
               Confirm
             </button>
-            <button className="button btn btn-sm" onClick={() => {history.push("/post")}}>Cancel</button>
+            <button className="button btn btn-sm btn-secondary" onClick={() => {history.push("/post")}}>Cancel</button>
           </div>
       </div>
     );

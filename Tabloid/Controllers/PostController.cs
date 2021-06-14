@@ -34,7 +34,8 @@ namespace Tabloid.Controllers
         // This method is for the POSTS page.
         // it GETs the full List of Posts from the database.
         // GET: api/<PostController>
-        [HttpGet("GetAll")]
+        //[HttpGet("GetAll")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_postRepository.GetAllPublishedPosts());
@@ -58,10 +59,11 @@ namespace Tabloid.Controllers
         // This method is for the POST DETAILS page.
         // It GETs a Post from the database by the PostId
         // GET api/<PostController>/Details/id
-        [HttpGet("Details/{id}")]
-        public IActionResult Get(int id)
+        //[HttpGet("Details/{id}")]
+        [HttpGet("{postId}")]
+        public IActionResult Get(int postId)
         {
-            var post = _postRepository.GetById(id);
+            var post = _postRepository.GetById(postId);
             if (post == null)
             {
                 return NotFound();
@@ -79,7 +81,7 @@ namespace Tabloid.Controllers
 
         // PUT api/<PostController>/5
         [HttpPut]
-        public IActionResult Put([FromBody] Post post)
+        public IActionResult Put(Post post)
         {
             _postRepository.Edit(post);
             return NoContent();

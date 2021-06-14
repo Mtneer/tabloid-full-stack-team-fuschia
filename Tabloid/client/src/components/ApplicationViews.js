@@ -50,11 +50,11 @@ export default function ApplicationViews() {
           {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/postform">
+        <Route exact path="/postform">
           {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/postdetails/:postId(\d+)">
+        <Route exact path="/post/detail/:postId(\d+)">
           {isLoggedIn ? <PostDetails/> : <Redirect to="/login" />}
         </Route>
 
@@ -66,11 +66,11 @@ export default function ApplicationViews() {
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
 
-        <Route exact path="/post/delete/:postId">
+        <Route exact path="/post/delete/:postId(\d+)">
           {isLoggedIn ? <ConfirmDelete /> : <Redirect to="/login" />}
         </Route>
         
-        <Route exact path="/post/edit/:postId">
+        <Route exact path="/post/edit/:postId(\d+)">
           {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
         </Route>
       </Switch>

@@ -14,7 +14,7 @@ export const Post = ({ post }) => {
     <Card className="m-8">
         <CardHeader>
             {/* Added link to post header. On click go to details view */}
-        <Link to={`/postdetails/${post.id}`} style={{ textDecoration: 'none', color: 'black'}}><p><strong>{post.title}</strong></p></Link>
+        <Link to={`/post/detail/${post.id}`} style={{ textDecoration: 'none', color: 'black'}}><p><strong>{post.title}</strong></p></Link>
         </CardHeader>
         <CardImg top src={post.imageLocation} alt={post.title} />
         <CardBody>
