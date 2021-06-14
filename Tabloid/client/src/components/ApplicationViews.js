@@ -11,11 +11,8 @@ import MyPosts from "./MyPosts";
 import ConfirmDelete from "./ConfirmDelete";
 import { PostDetails } from "./PostDetails";
 import {TagList} from "../components/tag/TagList"
-<<<<<<< HEAD
 import {TagForm} from "../components/tag/TagForm"
-=======
 import { CategoryList } from "../components/Category/CategoryList"
->>>>>>> main
 
 export default function ApplicationViews() {
   // import the isLoggedIn state variable from the UserProfileContext
@@ -60,6 +57,10 @@ export default function ApplicationViews() {
 
         <Route path="/postdetails/:postId(\d+)">
           {isLoggedIn ? <PostDetails/> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/tags" exact>
+          {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/tags/tagForm" exact>
