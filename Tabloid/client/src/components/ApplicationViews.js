@@ -64,6 +64,10 @@ export default function ApplicationViews() {
         <Route exact path="/post/delete/:postId">
           {isLoggedIn ? <ConfirmDelete /> : <Redirect to="/login" />}
         </Route>
+        
+        <Route exact path="/post/edit/:postId">
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
       </Switch>
     </main>
   );

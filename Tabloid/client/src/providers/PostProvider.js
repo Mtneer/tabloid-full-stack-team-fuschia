@@ -64,13 +64,9 @@ export const PostProvider = (props) => {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }))
-      
-      
+        }))      
   }
 
-  
-  
   // Provider method to edit a post by sending a PUT request based on a Post Object
   // to the Web API with a firebase Token for authentication.
   const editPost = (post) => {

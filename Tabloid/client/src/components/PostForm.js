@@ -1,20 +1,34 @@
 import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "../providers/PostProvider";
 import { CategoryContext } from "../providers/CategoryProvider";
-import { useHistory } from 'react-router-dom';
-import Post from "./Post";
-
+import { useHistory, useParams } from 'react-router-dom';
+import "./Post.css";
 
 export const PostForm = () => {
-    const { addPost, post } = useContext(PostContext);
+    const { addPost, getPostById, editPost } = useContext(PostContext);
     const { categories, getAllCategories } = useContext(CategoryContext);
     const [postFormInput, setPostFormInput] = useState()
-    const loggedInUserId = sessionStorage.getItem("userProfile");
+    const loggedInUserId = JSON.parse(sessionStorage.getItem("userProfile")).id;
 
-    const history = useHistory()
+    const {postId} = useParams();
+    const history = useHistory();
+
+    // wait for data before burron is active
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        getAllCategories();
+        getAllCategories()
+        .then(() => {
+            if (postId) {
+              getPostById(postId)
+              .then(post => {
+                setPostFormInput(post)
+                setIsLoading(false)
+              })
+            } else {
+              setIsLoading(false)
+            }
+          })
     }, []);
 
     //when a field changes, update state. The return will re-render and display based on the values in state
@@ -31,28 +45,38 @@ export const PostForm = () => {
     const handleClickSavePost = (event) => {
         event.preventDefault() //prevents the browser from submitting the form
 
-        function extractId() {
-            var str = loggedInUserId;
-            var matches = str.match(/\d+/g);
-            return matches[0];
+        // function extractId() {
+        //     var str = loggedInUserId;
+        //     var matches = str.match(/\d+/g);
+        //     return matches[0];
+        // }
+
+        // const userName = extractId();
+
+        setIsLoading(true);
+        if (postId) {
+            // PUT update
+            editPost({
+                Title: postFormInput.title,
+                Content: postFormInput.content,
+                PublishDateTime: postFormInput.publishDateTime,
+                ImageLocation: postFormInput.imageLocation,
+                CategoryId: parseInt(postFormInput.categoryId),
+            })
+            .then(() => history.push(`post/detail/${postId}`))
+        } else {
+            addPost({
+                userProfileId: loggedInUserId,
+                Title: postFormInput.title,
+                Content: postFormInput.content,
+                PublishDateTime: postFormInput.publishDateTime,
+                ImageLocation: postFormInput.imageLocation,
+                CategoryId: parseInt(postFormInput.categoryId),
+                IsApproved: true
+            })
+            .then(() => history.push("/post"))
+            //.then(() => history.push("/post/details/8787"))
         }
-
-        const userName = extractId();
-
-
-    addPost({
-        userProfileId: userName,
-        Title: postFormInput.title,
-        Content: postFormInput.content,
-        PublishDateTime: postFormInput.publishDateTime,
-        ImageLocation: postFormInput.imageLocation,
-        CategoryId: parseInt(postFormInput.categoryId),
-        IsApproved: true
-    }
-
-    )
-    .then(() => history.push("/post"))
-    //.then(() => history.push("/post/details/8787"))
     }
 
 return (
@@ -101,11 +125,12 @@ return (
                 <input type="datetime-local" id="publishDateTime" onChange={handleControlledInputChange} autoFocus className="form-control" placeholder="publication date" value={postFormInput?.publishDateTime} />
             </div>
         </fieldset>
-
-        <button className="btn btn-primary"
-            onClick={handleClickSavePost}>
-            Save Post
+        <div className="button-container">
+            <button className="button btn btn-primary"
+                onClick={handleClickSavePost} disable={isLoading}>
+                {postId ? <>Save Post</> : <>Add Post</>}
             </button>
+        </div>
     </form>
 )
 
