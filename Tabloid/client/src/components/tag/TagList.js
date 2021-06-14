@@ -15,7 +15,9 @@ export const TagList=() => {
 
   return (
     <div className="container">
-      <div className="row justify-content-center">
+      
+      <div><Button onClick={() => history.push("/tags/tagForm")}>Create Tag</Button></div>
+
         <div className="cards-column">
             {// sorting tags alphabetically
             tags.sort((a, b) => a.name.localeCompare(b.name))
@@ -24,8 +26,10 @@ export const TagList=() => {
             <Tag key={tag.id} tag={tag} />
             ))}
         </div>
+        
+        
       </div>
-    </div>
-
+  
+    //the button has anonymous onClick function to go to the /tagForm route -- where the tag form will pull up
   );
 }
