@@ -12,6 +12,7 @@ import ConfirmDelete from "./ConfirmDelete";
 import { PostDetails } from "./PostDetails";
 import {TagList} from "../components/tag/TagList"
 import {TagForm} from "../components/tag/TagForm"
+import ConfirmTagDelete from "./tag/ConfirmTagDelete"
 import { CategoryList } from "../components/Category/CategoryList"
 
 export default function ApplicationViews() {
@@ -65,6 +66,10 @@ export default function ApplicationViews() {
 
         <Route path="/tags/tagForm" exact>
           {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route exact path="/tag/delete/:tagId">
+          {isLoggedIn ? <ConfirmTagDelete /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/categories" exact>
