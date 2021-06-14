@@ -51,6 +51,8 @@ namespace Tabloid.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _tagRepository.Delete(id);
+            return NoContent();
         }
     }
 }
