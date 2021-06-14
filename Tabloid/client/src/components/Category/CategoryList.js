@@ -15,7 +15,9 @@ export const CategoryList=() => {
 
   return (
     <div className="container">
+      <button>Cretae New Category</button>
       <div className="row justify-content-center">
+        
         <div className="cards-column">
             {// sorting categories alphabetically
             categories.sort((a, b) => a.name.localeCompare(b.name))
