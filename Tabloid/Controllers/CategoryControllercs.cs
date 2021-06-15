@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tabloid.Models;
 using Tabloid.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -36,10 +37,12 @@ namespace Tabloid.Controllers
             return "value";
         }
 
-        // POST api/<CategoryControllercs>
+        // POST api/<CategoryController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Category(Category category)
         {
+            _categoryRepository.Add(category);
+            return Ok(category);
         }
 
         // PUT api/<CategoryControllercs>/5

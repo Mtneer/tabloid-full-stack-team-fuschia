@@ -15,7 +15,10 @@ export const CategoryList=() => {
 
   return (
     <div className="container">
+
+      <div><Button onClick={() => history.push("/categories/categoryForm")}>Create Category</Button></div>
       <div className="row justify-content-center">
+        
         <div className="cards-column">
             {// sorting categories alphabetically
             categories.sort((a, b) => a.name.localeCompare(b.name))
