@@ -45,9 +45,9 @@ export const PostForm = () => {
     const handleClickSavePost = (event) => {
         event.preventDefault();
         setIsLoading(true);
-        debugger
+        // debugger
         if (postId) {
-            debugger
+            // debugger
             // PUT update
             editPost({
                 Id: parseInt(postId),
@@ -60,7 +60,7 @@ export const PostForm = () => {
             })
             .then(() => history.push(`/post/detail/${postId}`))
         } else {
-            debugger
+            // debugger
             addPost({
                 userProfileId: loggedInUserId,
                 Title: postFormInput.title,

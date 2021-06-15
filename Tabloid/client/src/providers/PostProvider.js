@@ -40,7 +40,7 @@ export const PostProvider = (props) => {
   };
 
   const addPost = (post) => {
-    debugger
+    // debugger
     return getToken().then((token) =>
       fetch(apiUrl, {
             method: "POST",
