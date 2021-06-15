@@ -52,9 +52,12 @@ namespace Tabloid.Controllers
         }
 
         // DELETE api/<CategoryControllercs>/5
+        
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            _categoryRepository.Delete(id);
+            return NoContent();
         }
     }
 }

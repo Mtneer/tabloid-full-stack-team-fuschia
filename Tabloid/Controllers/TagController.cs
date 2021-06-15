@@ -55,5 +55,7 @@ namespace Tabloid.Controllers
         public void Delete(int id)
         {
         }
+
+
     }
 }
