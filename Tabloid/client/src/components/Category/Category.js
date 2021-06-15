@@ -1,15 +1,15 @@
 
-import React, { useContext } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { Card, CardBody } from "reactstrap";
 import Button from "reactstrap/lib/Button";
-import { PostContext } from "../../providers/PostProvider"
+
 
 
 
 
 export const Category = ({ category }) => {
-  const { posts, getAllPosts } = useContext(PostContext)
+  
 
   const history = useHistory();
     
@@ -23,3 +23,5 @@ export const Category = ({ category }) => {
     </Card>
   );
 }
+//modify api 
+//boolean on category model
