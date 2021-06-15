@@ -1,6 +1,6 @@
 ﻿--update Post
 --Set IsApproved = 1
---Where Id = 4
+--Where Id = 63
 
 select * from post
 

@@ -23,14 +23,14 @@ namespace Tabloid.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        // GET: api/<CategoryControllercs>
+        // GET: api/<CategoryController>
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             return Ok(_categoryRepository.GetAll());
         }
 
-        // GET api/<CategoryControllercs>/5
+        // GET api/<CategoryController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
@@ -45,14 +45,13 @@ namespace Tabloid.Controllers
             return Ok(category);
         }
 
-        // PUT api/<CategoryControllercs>/5
+        // PUT api/<CategoryController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<CategoryControllercs>/5
-        
+        // DELETE api/<CategoryController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
