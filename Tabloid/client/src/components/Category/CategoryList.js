@@ -16,7 +16,7 @@ export const CategoryList=() => {
   return (
     <div className="container">
 
-      <div><Button onClick={() => history.push("/categories/categoryForm")}>Create Category</Button></div>
+      <div><Button onClick={() => history.push("/categories/add")}>Create Category</Button></div>
       <div className="row justify-content-center">
         
         <div className="cards-column">

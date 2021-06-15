@@ -31,13 +31,53 @@ export default function ApplicationViews() {
           {isLoggedIn ? <Hello /> : <Redirect to="/login" />}
         </Route>
         
+        {/*-----------------POST ROUTES--------------------*/}
+        <Route exact path="/post">
+          {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
+        </Route>
+
         {/* Define the MyPosts path as "/myposts". Use the isLoggedIn state variable to 
         manage what the user sees based on their login status. If they are logged in,
         display their posts. If not, redirect them to the login page*/}
         <Route path="/myposts" exact>
           {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
         </Route>
+        
+        <Route exact path="/post/detail/:postId(\d+)">
+          {isLoggedIn ? <PostDetails/> : <Redirect to="/login" />}
+        </Route>
 
+        <Route exact path="/post/add">
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
+        
+        <Route exact path="/post/edit/:postId(\d+)">
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route exact path="/post/delete/:postId(\d+)">
+          {isLoggedIn ? <ConfirmDelete /> : <Redirect to="/login" />}
+        </Route>
+        
+        {/*-----------------TAG ROUTES--------------------*/}
+
+        <Route exact path="/tags">
+          {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route exact path="/tags/add">
+          {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route exact path="/categories">
+          {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route exact path="/categories/add">
+          {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
+        </Route>
+
+        {/*----------------Authentication Routes----------------- */}
         {/* Define the Login path as "/login". */}
         <Route path="/login">
           <Login />
@@ -46,39 +86,6 @@ export default function ApplicationViews() {
         {/* Define the Register path as "/register". */}
         <Route path="/register">
           <Register />
-        </Route>
-
-        <Route exact path="/post">
-          {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/postform">
-          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/postdetails/:postId(\d+)">
-          {isLoggedIn ? <PostDetails/> : <Redirect to="/login" />}
-        </Route>
-        
-        <Route path="/tags" exact>
-          {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
-        </Route>
-
-
-        <Route path="/tags/tagForm" exact>
-          {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/categories" exact>
-          {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/categories/categoryForm" exact>
-          {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
-        </Route>
-
-        <Route exact path="/post/delete/:postId">
-          {isLoggedIn ? <ConfirmDelete /> : <Redirect to="/login" />}
         </Route>
       </Switch>
     </main>

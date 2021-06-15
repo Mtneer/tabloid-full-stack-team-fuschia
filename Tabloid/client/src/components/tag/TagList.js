@@ -16,7 +16,7 @@ export const TagList=() => {
   return (
     <div className="container">
       
-      <div><Button onClick={() => history.push("/tags/tagForm")}>Create Tag</Button></div>
+      <div><Button onClick={() => history.push("/tags/add")}>Create Tag</Button></div>
 
         <div className="cards-column">
             {// sorting tags alphabetically

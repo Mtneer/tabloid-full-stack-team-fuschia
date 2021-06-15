@@ -10,7 +10,7 @@ export const CategoryProvider = (props) => {
   const [ categories, setCategories ] = useState([]);
   
   const getAllCategories = () => {
-    getToken().then((token) =>
+    return getToken().then((token) =>
         fetch(`${apiUrl}/GetAll`, {
             method: "GET",
             headers: {
