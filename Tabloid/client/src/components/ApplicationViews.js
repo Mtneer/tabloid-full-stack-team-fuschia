@@ -14,7 +14,6 @@ import {TagList} from "../components/tag/TagList"
 import {TagForm} from "../components/tag/TagForm"
 import ConfirmTagDelete from "./tag/ConfirmTagDelete"
 import { CategoryList } from "../components/Category/CategoryList"
-import { CategoryList } from "../components/Category/CategoryList"
 import { CategoryForm } from "../components/Category/CategoryForm"
 
 export default function ApplicationViews() {
