@@ -12,7 +12,7 @@ export const PostProvider = (props) => {
 
   const getAllPosts = () => {
     getToken().then((token) =>
-        fetch(`${apiUrl}/GetAll`, {
+        fetch(apiUrl, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -22,6 +22,9 @@ export const PostProvider = (props) => {
       .then(setPosts);
   };
   
+  // Provider method to retrieve all of the posts authored by the current user 
+  // by sending a GET request based on the Current User's ID
+  // to the Web API with a firebase Token for authentication.
   const getUserPosts = () => {
     const UserProfile = JSON.parse(sessionStorage.getItem("userProfile"));
     // debugger
@@ -37,36 +40,48 @@ export const PostProvider = (props) => {
   };
 
   const addPost = (post) => {
+    // debugger
     return getToken().then((token) =>
-        fetch(apiUrl, {
+      fetch(apiUrl, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(post)
-    }).then(resp => {
-      // debugger
-      if (resp.ok) {
-        return resp.json();
-      }
-      throw new Error("Unauthorized");
-    }));
+          }))
+          .then(resp => resp.json())
   };
 
   const getPostById = (postId) => {
     return getToken().then((token) =>
-        fetch(`${apiUrl}/Details/${postId}`, {
+        fetch(`${apiUrl}/${postId}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }))
-      
-      
+        .then(resp => resp.json())    
   }
 
-  
+  // Provider method to edit a post by sending a PUT request based on a Post Object
+  // to the Web API with a firebase Token for authentication.
+  const editPost = (post) => {
+    // debugger
+    return getToken().then((token) => {
+        // debugger
+        fetch(apiUrl, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(post)
+    })});
+  };
+
+  // Provider method to delete a post by sending a DELETE request based on a Post's ID
+  // to the Web API with a firebase Token for authentication.
   const deletePost = (postId) => {
     getToken().then((token) =>
         fetch(`${apiUrl}/${postId}`, {
@@ -79,7 +94,7 @@ export const PostProvider = (props) => {
   };
 
   return (
-    <PostContext.Provider value={{ posts, myposts, getAllPosts, getPostById, getUserPosts, addPost, deletePost }}>
+    <PostContext.Provider value={{ posts, myposts, getAllPosts, getPostById, getUserPosts, addPost, editPost, deletePost }}>
       {props.children}
     </PostContext.Provider>
   );

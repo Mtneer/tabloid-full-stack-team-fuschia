@@ -13,8 +13,7 @@ using Tabloid.Repositories;
 namespace Tabloid.Controllers
 {
     // Use the Authorize tag to require user authorization to any of the controller methods
-   
-    
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
@@ -35,7 +34,8 @@ namespace Tabloid.Controllers
         // This method is for the POSTS page.
         // it GETs the full List of Posts from the database.
         // GET: api/<PostController>
-        [HttpGet("GetAll")]
+        //[HttpGet("GetAll")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_postRepository.GetAllPublishedPosts());
@@ -59,10 +59,11 @@ namespace Tabloid.Controllers
         // This method is for the POST DETAILS page.
         // It GETs a Post from the database by the PostId
         // GET api/<PostController>/Details/id
-        [HttpGet("Details/{id}")]
-        public IActionResult Get(int id)
+        //[HttpGet("Details/{id}")]
+        [HttpGet("{postId}")]
+        public IActionResult Get(int postId)
         {
-            var post = _postRepository.GetById(id);
+            var post = _postRepository.GetById(postId);
             if (post == null)
             {
                 return NotFound();
@@ -79,18 +80,11 @@ namespace Tabloid.Controllers
         }
 
         // PUT api/<PostController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put(Post post)
         {
-            //try
-            //{
-            //    _postRepository.Edit(post);
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+            _postRepository.Edit(post);
+            return NoContent();
         }
 
         // DELETE api/<PostController>/5
@@ -99,12 +93,6 @@ namespace Tabloid.Controllers
         {
             _postRepository.Delete(id);
             return NoContent();
-        }
-
-        private UserProfile GetCurrentUserProfileId()
-        {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

@@ -11,12 +11,9 @@ export const PostDetails = () => {
       
     
     useEffect(() => {
-      console.log("useEffect", postId)
       getPostById(postId)
-      .then(resp => resp.json())
       .then(setDetailPost);
-      
-      }, [])
+    }, [])
       
     return (
         <>

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import {useHistory} from "react-router-dom";
 import { Card, CardImg, CardBody, CardHeader, Button } from "reactstrap";
+import "./Post.css";
 
 export const Post = ({ post }) => {
   const isCurrentUserPost = JSON.parse(sessionStorage.getItem("userProfile")).id === post.userProfileId;
@@ -13,7 +14,7 @@ export const Post = ({ post }) => {
     <Card className="m-8">
         <CardHeader>
             {/* Added link to post header. On click go to details view */}
-        <Link to={`/postdetails/${post.id}`} style={{ textDecoration: 'none', color: 'black'}}><p><strong>{post.title}</strong></p></Link>
+        <Link to={`/post/detail/${post.id}`} style={{ textDecoration: 'none', color: 'black'}}><p><strong>{post.title}</strong></p></Link>
         </CardHeader>
         <CardImg top src={post.imageLocation} alt={post.title} />
         <CardBody>
@@ -26,9 +27,13 @@ export const Post = ({ post }) => {
               ))}
               </div> */}
            
-          <div>
+          <div className="button-container">
             {isCurrentUserPost 
-              ? <Button onClick={() => {history.push(`/post/delete/${post.id}`)}}>Delete</Button> 
+              ? <Button className="button btn btn-sm" onClick={() => {history.push(`/post/edit/${post.id}`)}}>Edit</Button> 
+              : <div></div>
+            }
+            {isCurrentUserPost 
+              ? <Button className="button btn btn-sm" onClick={() => {history.push(`/post/delete/${post.id}`)}}>Delete</Button> 
               : <div></div>
             }
           </div>
