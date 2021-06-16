@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tabloid.Models;
 using Tabloid.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,9 +32,9 @@ namespace Tabloid.Controllers
 
         // POST api/<PostTagController>
         [HttpPost]
-        public IActionResult Post(int postId, List<int> TagIds)
+        public IActionResult Post(PostTag postTag)
         {
-            _postTagRepository.AddPostTag(postId, TagIds);
+            _postTagRepository.AddPostTag(postTag);
             return NoContent();
         }
 

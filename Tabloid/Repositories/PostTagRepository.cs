@@ -44,21 +44,17 @@ namespace Tabloid.Repositories
             }
         }
 
-        public void AddPostTag(int postId, List<int> tagIds)
+        public void AddPostTag(PostTag postTag)
         {
-            string sqlQuery = "";
-            foreach (int tagId in tagIds)
-            {
-                sqlQuery += $"INSERT INTO PostTag (PostId, TagId) VALUES ({postId}, {tagId}) ";
-            }
-
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = sqlQuery;
-
+                    cmd.CommandText = @"INSERT INTO PostTag (PostId, TagId)
+                                        VALUES (@PostId, @TagId)";
+                    cmd.Parameters.AddWithValue("@PostId", postTag.PostId);
+                    cmd.Parameters.AddWithValue("@TagId", postTag.TagId);
                     cmd.ExecuteNonQuery();
                 }
             }

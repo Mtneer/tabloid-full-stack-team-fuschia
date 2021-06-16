@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { PostProvider } from "../providers/PostProvider";
+import { PostTagProvider } from "../providers/PostTagProvider";
 import { PostList } from "./PostList";
 import { PostForm } from "./PostForm";
 import Login from "./Login";
@@ -46,7 +47,7 @@ export default function ApplicationViews() {
         <Route exact path="/post/detail/:postId(\d+)">
           {isLoggedIn ? <PostDetails/> : <Redirect to="/login" />}
         </Route>
-
+        
         <Route exact path="/post/add">
           {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
         </Route>
@@ -68,6 +69,8 @@ export default function ApplicationViews() {
         <Route exact path="/tags/add">
           {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
         </Route>
+
+        {/*-----------------CATEGORY ROUTES--------------------*/}
 
         <Route exact path="/categories">
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
