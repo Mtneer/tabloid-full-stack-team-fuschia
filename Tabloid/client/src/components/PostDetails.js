@@ -13,7 +13,7 @@ export const PostDetails = () => {
     const { tags, getAllTags } = useContext(TagContext);
     const [ filteredTags, setFilteredTags ] = useState([]);
     const [ showTagOptions, setShowTagOptions ] = useState(false);
-    const [ userInput, setUserInput ] = useState(false);
+    const [ userInput, setUserInput ] = useState("");
     const [ activeOption, setActiveOption ] = useState(0);
       
     const history = useHistory();
@@ -21,13 +21,13 @@ export const PostDetails = () => {
     useEffect(() => {
       getPostById(postId)
       .then(setDetailPost)
-      .then(getAllTags);
+      .then(getAllTags)
     }, [])
 
     const handleControlledInputChange = (e) => {
         const userInput = e.currentTarget.value;
         const newFilteredTags = tags.filter(
-            (tag) => tag.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+            (tag) => tag.name.toLowerCase().indexOf(userInput.toLowerCase()) > -1
             );
         setFilteredTags(newFilteredTags);
         setUserInput(true);
@@ -36,49 +36,49 @@ export const PostDetails = () => {
         }
     };
 
-    const onClick (e) => {
+    const onClick = (e) => {
         setActiveOption(0);
         setShowTagOptions(false);
         setUserInput(filteredTags[activeOption]);
     }
 
-    onKeyDown = (e) => {
-        // if "Enter" is pressed
-        if (e.keyCode === 13) {
-            setActiveOption(0);
-            setShowTagOptions(false);
-            setUserInput(filteredTags[activeOption]);
-        }
-        else if (e.keyCode === 38) {
-            if (activeOption === 0) {
-                return;
-            }
-            let newActiveOption = { ...activeOption };
-            newActiveOption -= 1;
-            setActiveOption(newActiveOption);
-        } else if (e.keyCode === 40) {
-            if (activeOption - 1 === filteredTags.length) {
-                return;
-            }
-            let newActiveOption = { ...activeOption };
-            newActiveOption += 1;
-            setActiveOption(newActiveOption);
-        }
-      };
+    // const onKeyDown = (e) => {
+    //     // if "Enter" is pressed
+    //     if (e.keyCode === 13) {
+    //         setActiveOption(0);
+    //         setShowTagOptions(false);
+    //         setUserInput(filteredTags[activeOption]);
+    //     }
+    //     else if (e.keyCode === 38) {
+    //         if (activeOption === 0) {
+    //             return;
+    //         }
+    //         let newActiveOption = { ...activeOption };
+    //         newActiveOption -= 1;
+    //         setActiveOption(newActiveOption);
+    //     } else if (e.keyCode === 40) {
+    //         if (activeOption - 1 === filteredTags.length) {
+    //             return;
+    //         }
+    //         let newActiveOption = { ...activeOption };
+    //         newActiveOption += 1;
+    //         setActiveOption(newActiveOption);
+    //     }
+    //   };
 
     const TagDropdown = () => {
         if (showTagOptions && userInput) {
-            if (filteredTags.length) {
+            if (tags.length) {
               return (
                 <ul className="tags">
-                  {filteredTags.map((tagName, index) => {
+                  {filteredTags.map((tag, index) => {
                     let className;
                     if (index === activeOption) {
                       className = 'option-active';
                     }
                     return (
-                      <li className={className} key={optionName} onClick={onClick}>
-                        {optionName}
+                      <li className={className} key={tag.id}>
+                        {tag.name}
                       </li>
                     );
                   })}
@@ -91,19 +91,29 @@ export const PostDetails = () => {
                 </div>
               );
             }
-          }
+        } else {
+          return null;
+        }
     }
       
     return (
         <>
             <Card className="m-8">
                 <CardHeader>
-                    <p><strong>{detailPost.title}</strong></p>
-                    <div className="row button-container">
-                        <TagDropdown />
+                    <div className="row">
+                        <p className="col"><strong>{detailPost.title}</strong></p>
+                        {/* <TagDropdown /> */}
+                        <div className="col search">
+                          <input type="text" className="search-box" onChange={handleControlledInputChange}/>
+                          <input type="submit" value="" className="search-btn" />
+                          <TagDropdown />
+                        </div>
+                    </div>
+                    <div className="row">
+                      {/* {Post.Tags.foreach }
+                      <span class="badge badge-info">@tag.Name</span> */}
                     </div>
                 </CardHeader>
-                
                 <CardImg top src={detailPost.imageLocation} alt={detailPost.title} />
                 <CardBody>
                     <p>{detailPost.content}</p>
