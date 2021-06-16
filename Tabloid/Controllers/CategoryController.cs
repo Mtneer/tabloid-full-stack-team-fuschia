@@ -51,7 +51,8 @@ namespace Tabloid.Controllers
         {
         }
 
-        // DELETE api/<CategoryController>/5
+        // DELETE api/<CategoryControllercs>/5
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -60,3 +61,5 @@ namespace Tabloid.Controllers
         }
     }
 }
+    
+

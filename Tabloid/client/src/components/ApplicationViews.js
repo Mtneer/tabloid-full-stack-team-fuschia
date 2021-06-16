@@ -70,7 +70,13 @@ export default function ApplicationViews() {
           {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
         </Route>
 
-        <Route exact path="/categories">
+        <Route exact path="/post/delete/:postId">
+          {isLoggedIn ? <ConfirmDelete /> : <Redirect to="/login" />}
+        </Route>
+
+       {/*-----------------CATEGORY ROUTES--------------------*/} 
+
+       <Route exact path="/categories">
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
 
@@ -78,9 +84,12 @@ export default function ApplicationViews() {
           {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
         </Route>
 
-        <Route exact path="/post/delete/:postId">
-          {isLoggedIn ? <ConfirmDelete /> : <Redirect to="/login" />}
+        <Route exact path="/categories/delete/:categoryId">
+          {isLoggedIn ? <ConfirmDeleteCategory /> : <Redirect to="/login" />}
         </Route>
+
+
+
 
         {/*----------------Authentication Routes----------------- */}
         {/* Define the Login path as "/login". */}

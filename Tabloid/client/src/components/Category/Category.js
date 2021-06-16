@@ -19,7 +19,11 @@ export const Category = ({ category }) => {
         <strong>{category.name}</strong>
       </CardBody>
       {/* // if categoryId doesnt exist in post, draw delete button */}
+      {category.isUsed?
+      " "
+      :
       <Button onClick={() => {history.push(`/categories/delete/${category.id}`)}}>Delete</Button> 
+}
     </Card>
   );
 }
