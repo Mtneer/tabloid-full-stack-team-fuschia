@@ -57,5 +57,24 @@ namespace Tabloid.Repositories
                 }
             }
         }
+
+        public void Edit (Tag tag)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Tag
+                                        SET [Name] = @name
+                                        WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", tag.Id);
+                    cmd.Parameters.AddWithValue("@name", tag.Name);
+                    
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 };
