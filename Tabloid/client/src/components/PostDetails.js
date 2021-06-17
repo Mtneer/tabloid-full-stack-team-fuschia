@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {useParams, useHistory} from "react-router-dom"
+import {useParams} from "react-router-dom"
 import { Card, CardImg, CardBody, CardHeader, Button, Badge } from "reactstrap";
 import { PostContext } from "../providers/PostProvider";
 import { TagContext } from "../providers/TagProvider";
@@ -27,8 +27,6 @@ export const PostDetails = () => {
     /* State variable that tracks the index of the selected tag for 
     the purpose of highlighting the user selected tag in the dropdown */
     const [ activeOption, setActiveOption ] = useState(0);
-      
-    const history = useHistory();
     
     useEffect(() => {
       getPostById(postId)
@@ -72,7 +70,7 @@ export const PostDetails = () => {
     /* Helper function allows the user to use the up and down keys to select an item
     from the dropdown list and select that item using the Enter (Return) key */
     const onKeyDown = (e) => {
-        // debugger
+
         // if the dropdown is not currently displayed and the user clicks something on the keyboard, ignore it
         if (showTagOptions===false) {
           return
@@ -80,7 +78,6 @@ export const PostDetails = () => {
 
         // if "Enter" is pressed
         if (e.keyCode === 13) {
-          // debugger
             // Do the same thing as the onClickSave function
             onClickSave(e)
         } 
@@ -88,7 +85,6 @@ export const PostDetails = () => {
         else if (e.keyCode === 38) {
             // if User is already at the top of the dropdown list, do nothing
             if (activeOption === 0) {
-              // debugger
                 return;
             }
             // reset state variable to activeOption (filteredTags list index) minus one
@@ -132,6 +128,7 @@ export const PostDetails = () => {
         PostId: parseInt(postId),
         TagId: tag.id
       })
+      .then(() => setUserInput(""))
       // Retrieve the new Post object from the database, which will have the new tag relationship
       .then(() => getPostById(postId))
       // set the new Post object to the state variable

@@ -214,8 +214,8 @@ namespace Tabloid.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            DELETE FROM Post
-                            WHERE Id = @id
+                            DELETE FROM PostTag WHERE PostTag.PostId = @Id;
+                            DELETE FROM Post WHERE Post.Id = @id
                         ";
 
                     cmd.Parameters.AddWithValue("@id", id);
