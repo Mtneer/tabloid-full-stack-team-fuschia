@@ -57,5 +57,7 @@ namespace Tabloid.Controllers
             _tagRepository.Delete(id);
             return NoContent();
         }
+
+
     }
 }
