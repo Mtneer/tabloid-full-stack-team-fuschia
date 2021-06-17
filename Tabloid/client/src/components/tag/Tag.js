@@ -13,6 +13,9 @@ export const Tag = ({ tag }) => {
         <Button className="button btn btn-sm" onClick={() => {history.push(`/tag/edit/${tag.id}`)}}>Edit</Button> 
         </div>
              
+        
+        <Button onClick={() => {history.push(`/tag/delete/${tag.id}`)}}>Delete</Button>
+        
       </CardBody>
     </Card>
   );

@@ -12,8 +12,10 @@ import ConfirmDelete from "./ConfirmDelete";
 import { PostDetails } from "./PostDetails";
 import {TagList} from "../components/tag/TagList"
 import {TagForm} from "../components/tag/TagForm"
+import ConfirmTagDelete from "./tag/ConfirmTagDelete"
 import { CategoryList } from "../components/Category/CategoryList"
 import { CategoryForm } from "../components/Category/CategoryForm"
+import { ConfirmDeleteCategory } from "../components/Category/ConfirmDeleteCategory"
 
 export default function ApplicationViews() {
   // import the isLoggedIn state variable from the UserProfileContext
@@ -65,6 +67,11 @@ export default function ApplicationViews() {
           {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
         </Route>
 
+        <Route exact path="/tag/delete/:tagId">
+          {isLoggedIn ? <ConfirmTagDelete /> : <Redirect to="/login" />}
+        </Route>
+
+        
         <Route exact path="/tags/add">
           {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
         </Route>
@@ -73,13 +80,25 @@ export default function ApplicationViews() {
           {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
         </Route>
 
-        <Route exact path="/categories">
+        
+        
+
+       {/*-----------------CATEGORY ROUTES--------------------*/} 
+
+       <Route exact path="/categories">
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
 
         <Route exact path="/categories/add">
           {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
         </Route>
+
+        <Route exact path="/categories/delete/:categoryId">
+          {isLoggedIn ? <ConfirmDeleteCategory /> : <Redirect to="/login" />}
+        </Route>
+
+
+
 
         {/*----------------Authentication Routes----------------- */}
         {/* Define the Login path as "/login". */}

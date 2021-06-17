@@ -4,6 +4,7 @@ import { TagContext } from "../../providers/TagProvider";
 
 export const TagForm = () => {
   //exposing the addTag function from the TagProdiver
+<<<<<<< HEAD
   const { addTag, editTag, getTagById } = useContext(TagContext);
   // setting tagInput to an empty state so we can add in the new tag information
   const [tagInput, setTagInput] = useState({});
@@ -23,11 +24,20 @@ export const TagForm = () => {
       setIsLoading(false)
     }
   }, []);
+=======
+  const { addTag } = useContext(TagContext);
+  // setting tagInput to an empty state so we can add in the new tag information
+  const [tagInput, setTagInput] = useState({});
+>>>>>>> main
 
+  //update state when a field changes; the return will re-render and display based on the values in state
   const handleControlledInputChange = (event) => {
-      let newTag = { ...tagInput}
-      newTag[event.target.id] = event.target.value 
-      setTagInput(newTag)
+    //creating a copy of state to change and then set;using spread syntax to copy an object 
+    let newTag = { ...tagInput}
+    //tag is an object with properties;set the properties to the new valuse using object bracket notation 
+    newTag[event.target.id] = event.target.value 
+    //update state 
+    setTagInput(newTag)
   }
 
   const handleClickAddTag = (event) => {

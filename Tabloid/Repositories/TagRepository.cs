@@ -16,7 +16,10 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Id, [Name] FROM Tag";
+                    cmd.CommandText = @"
+                            SELECT Id as TagId, [Name] as TagName
+                            FROM Tag 
+                                ";
 
                     var reader = cmd.ExecuteReader();
 
@@ -24,10 +27,14 @@ namespace Tabloid.Repositories
 
                     while (reader.Read())
                     {
+
                         tags.Add(new Tag()
                         {
-                            Id = DbUtils.GetInt(reader, "Id"),
-                            Name = DbUtils.GetString(reader, "Name")
+                            Id = DbUtils.GetInt(reader, "TagId"),
+                            Name = DbUtils.GetString(reader, "TagName"),
+
+                            
+                                
                         }
 
                     );
@@ -72,6 +79,21 @@ namespace Tabloid.Repositories
                     cmd.Parameters.AddWithValue("@id", tag.Id);
                     cmd.Parameters.AddWithValue("@name", tag.Name);
                     
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM PostTag WHERE PostTag.TagId = @Id; DELETE FROM Tag WHERE Id = @Id";
+                    
+                    DbUtils.AddParameter(cmd, "@Id", id);
                     cmd.ExecuteNonQuery();
                 }
             }
