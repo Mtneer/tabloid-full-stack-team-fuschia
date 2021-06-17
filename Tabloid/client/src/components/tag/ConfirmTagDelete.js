@@ -12,10 +12,10 @@ export const ConfirmTagDelete = () => {
             <h3>Are you sure you want to delete this tag?</h3>
           </div>
           <div className="row justify-content-center">
-            <button onClick={() => {history.push("/tags")}} className="buttonCancel">Cancel</button>
-            <button onClick={() => {deleteTag(tagId); history.push("/tags")}} className="buttonDelete">
+            <button onClick={() => {deleteTag(tagId); history.push("/tags")}} className="button btn btn-sm btn-primary">
               Confirm
             </button>
+            <button onClick={() => {history.push("/tags")}} className="button btn btn-sm btn-secondary">Cancel</button>
           </div>
       </div>
     );
