@@ -1,11 +1,12 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { CategoryContext } from "../../providers/CategoryProvider";
 
 export const CategoryForm = () => {
+  
   const history = useHistory();
   //exposing the addCategory function from the CategoryProdiver
-  const { addCategory } = useContext(CategoryContext);
+  const { addCategory, getCategoryById, editCategory } = useContext(CategoryContext);
   // setting categroryText to an empty state so we can add in the new category information
   const [categoryInput, setCategoryInput] = useState();
 

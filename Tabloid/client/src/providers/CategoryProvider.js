@@ -39,6 +39,33 @@ export const CategoryProvider = (props) => {
     }));
   };
 
+  const getCategoryById = (categoryId) => {
+    return getToken().then((token) =>
+        fetch(`${apiUrl}/${categoryId}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }))
+        .then(resp => resp.json())    
+  }
+
+    // Provider method to edit a category by sending a PUT request based on a Category Object
+  // to the Web API with a firebase Token for authentication.
+  const editCategory = (category) => {
+    // debugger
+    return getToken().then((token) => {
+        // debugger
+        fetch(apiUrl, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(category)
+    })});
+  };
+
   const deleteCategory = (categoryId) => {
     getToken().then((token) =>
         fetch(`${apiUrl}/${categoryId}`, {
@@ -52,7 +79,7 @@ export const CategoryProvider = (props) => {
   
     
   return (
-    <CategoryContext.Provider value={{ categories, getAllCategories, addCategory, deleteCategory }}>
+    <CategoryContext.Provider value={{ categories, getAllCategories, addCategory, deleteCategory, editCategory, getCategoryById }}>
       {props.children}
     </CategoryContext.Provider>
   );
