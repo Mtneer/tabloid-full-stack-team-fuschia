@@ -8,5 +8,9 @@ namespace Tabloid.Models
 
         [DisplayName("Category Name")]
         public string Name { get; set; }
+        public bool IsUsed { get; set; }
+
+
+       
     }
 }

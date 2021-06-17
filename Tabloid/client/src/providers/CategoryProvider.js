@@ -38,10 +38,21 @@ export const CategoryProvider = (props) => {
       throw new Error("Unauthorized");
     }));
   };
+
+  const deleteCategory = (categoryId) => {
+    getToken().then((token) =>
+        fetch(`${apiUrl}/${categoryId}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+    })).then(getAllCategories())
+  };
   
     
   return (
-    <CategoryContext.Provider value={{ categories, getAllCategories, addCategory }}>
+    <CategoryContext.Provider value={{ categories, getAllCategories, addCategory, deleteCategory }}>
       {props.children}
     </CategoryContext.Provider>
   );

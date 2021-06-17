@@ -2,11 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {Category } from "./Category";
 import { CategoryContext } from "../../providers/CategoryProvider";
+
 import Button from "reactstrap/lib/Button";
 
 export const CategoryList=() => {
   const history = useHistory();
   const { categories, getAllCategories } = useContext(CategoryContext);
+  
 
   useEffect(() => {
     getAllCategories();
