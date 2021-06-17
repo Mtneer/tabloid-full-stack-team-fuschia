@@ -10,7 +10,7 @@ export const TagProvider = (props) => {
   const [tags, setTags] = useState([]);
 
   const getAllTags = () => {
-    getToken().then((token) =>
+    return getToken().then((token) =>
       fetch(`${apiUrl}`, {
         method: "GET",
         headers: {

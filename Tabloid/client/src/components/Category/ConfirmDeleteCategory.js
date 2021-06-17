@@ -12,10 +12,10 @@ export const ConfirmDeleteCategory = () => {
             <h3>Are you sure you want to delete this category?</h3>
           </div>
           <div className="row justify-content-center">
-            <button onClick={() => {history.push("/categories")}} className="buttonCancel">Cancel</button>
-            <button onClick={() => {deleteCategory(categoryId); history.push("/categories")}} className="buttonDelete">
+            <button onClick={() => {deleteCategory(categoryId); history.push("/categories")}} className="button btn btn-sm btn-primary">
               Confirm
             </button>
+            <button onClick={() => {history.push("/categories")}} className="button btn btn-sm btn-secondary">Cancel</button>
           </div>
       </div>
     );

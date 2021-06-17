@@ -1,3 +1,5 @@
+
+/* ----------- Button Styling -------------*/
 .button-container {
     display: flex;
     justify-content: flex-end;
@@ -5,4 +7,77 @@
 
 .button {
     margin: 0em 0.5em;
+}
+
+/* ----------- Tag Styling -------------*/
+.badge {
+    margin: 0px 5px;
+}
+
+/* --- Add Tag Search Feature Styling -----*/
+.search {
+    text-align: right;
+}
+
+.search-box {
+    border: 4px solid transparent;
+    border-radius: 2px;
+    /* font-size: 2rem; */
+    width: 80%;
+    /* padding: 1rem; */
+    transition: width 0.3s;
+}
+
+.search-box:focus {
+    width: 80%;
+    outline: none;
+    border: 4px solid #08a1b6;
+}
+
+.search-btn:hover {
+    outline: none;
+    opacity: 0.4;
+    cursor: pointer;
+}
+
+.search-btn:focus {
+    outline: none;
+    opacity: 0.6;
+}
+
+ul.tags {
+    display: block;
+    list-style: none;
+    width: 80%;
+    transition: width 0.3s;
+    margin: auto;
+    position: absolute;
+    background: white;
+    border-radius: 10px;
+    padding: 0px 10px;
+}
+  
+ul.tags li {
+    display: block;
+    background: white;
+    margin: 2px auto;
+    padding: 2px;
+    width: 100%;
+    border-radius: 2px;
+}
+
+ul.tags li:hover {
+    font-weight: bold;
+    color: #00b4cc;
+    cursor: pointer;
+}
+
+ul.tags li.option-active {
+    background: whitesmoke;
+    /* font-size: 1.5rem; */
+    color: #00b4cc;
+}
+
+.no-options {
+    color: white;
 }

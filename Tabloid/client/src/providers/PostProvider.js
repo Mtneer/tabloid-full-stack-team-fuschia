@@ -83,7 +83,7 @@ export const PostProvider = (props) => {
   // Provider method to delete a post by sending a DELETE request based on a Post's ID
   // to the Web API with a firebase Token for authentication.
   const deletePost = (postId) => {
-    getToken().then((token) =>
+    return getToken().then((token) =>
         fetch(`${apiUrl}/${postId}`, {
             method: "DELETE",
             headers: {
