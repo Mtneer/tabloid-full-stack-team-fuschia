@@ -5,10 +5,16 @@ using System.Threading.Tasks;
 
 namespace Tabloid.Models
 {
-    public class Tag
+    public class PostTag
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public PostTag PostTag { get; set; }
+        public int PostId { get; set; }
+        public int TagId { get; set; }
+
+
+
+
+
+
     }
 }
