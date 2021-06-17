@@ -72,11 +72,14 @@ namespace Tabloid.Repositories
                               u.FirebaseUserId, u.FirstName, u.LastName, u.DisplayName, 
                               u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
-                              ut.[Name] AS UserTypeName
+                              ut.[Name] AS UserTypeName,
+                              t.Id AS TagId, t.[Name] AS TagName
                          FROM Post p
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
+                              LEFT JOIN PostTag pt ON p.Id = pt.PostId
+                              LEFT JOIN Tag t ON pt.TagId = t.Id
                         WHERE IsApproved = 1 AND PublishDateTime < SYSDATETIME()
                               AND p.id = @id";
                     // Attach the UserId parameter to the SQL Query using SQLConnection provided methods
@@ -86,9 +89,21 @@ namespace Tabloid.Repositories
 
                     Post post = null;
 
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        post = NewPostFromReader(reader);
+                        if (post == null)
+                        {
+                            post = NewPostFromReader(reader);
+                        }
+
+                        if (DbUtils.IsNotDbNull(reader, "TagId"))
+                        {
+                            post.Tags.Add(new Tag()
+                            {
+                                Id = DbUtils.GetInt(reader, "TagId"),
+                                Name = DbUtils.GetString(reader, "TagName"),
+                            });
+                        }
                     }
 
                     reader.Close();
@@ -130,7 +145,7 @@ namespace Tabloid.Repositories
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE u.Id = @id
+                        WHERE u.Id = @id AND IsApproved = 1 AND PublishDateTime < SYSDATETIME()
                         ORDER BY p.CreateDateTime DESC";
 
                     // Attach the UserId parameter to the SQL Query using SQLConnection provided methods
@@ -158,7 +173,6 @@ namespace Tabloid.Repositories
                 }
             }
         }
-
 
         public void Add(Post post)
         {
@@ -200,8 +214,8 @@ namespace Tabloid.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            DELETE FROM Post
-                            WHERE Id = @id
+                            DELETE FROM PostTag WHERE PostTag.PostId = @Id;
+                            DELETE FROM Post WHERE Post.Id = @id
                         ";
 
                     cmd.Parameters.AddWithValue("@id", id);
@@ -274,7 +288,8 @@ namespace Tabloid.Repositories
                         Id = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
                         Name = reader.GetString(reader.GetOrdinal("UserTypeName"))
                     }
-                }
+                },
+                Tags = new List<Tag>()
             };
         }
     }

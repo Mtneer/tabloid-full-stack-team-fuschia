@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import ApplicationViews from "./components/ApplicationViews";
 import { CategoryProvider } from './providers/CategoryProvider';
 import { TagProvider } from "./providers/TagProvider";
+import { PostTagProvider } from "./providers/PostTagProvider";
 
 // Define an App function which initializes the Header and ApplicationViews components nested within the UserProfileProvider and Router, such that the login authorization can interact with the UserProfiles in the database and ApplicationViews can define Routes.
 function App() {
@@ -13,12 +14,14 @@ function App() {
     <Router>
       <UserProfileProvider>
         <PostProvider>
-          <CategoryProvider>
-            <TagProvider>
-              <Header />
-              <ApplicationViews />
-            </TagProvider>
-          </CategoryProvider>
+          <PostTagProvider>
+            <CategoryProvider>
+              <TagProvider>
+                <Header />
+                <ApplicationViews />
+              </TagProvider>
+            </CategoryProvider>
+          </PostTagProvider>
         </PostProvider>
       </UserProfileProvider>
     </Router>
