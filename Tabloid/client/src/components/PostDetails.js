@@ -115,11 +115,15 @@ export const PostDetails = () => {
     /* Helper function that monitors the submission of the Tag */
     const onClickSave = () => {
       // debugger
+      // check to see if there is any user input
+      if (userInput==="") {
+        return alert("Please search for a tag.")
+      }
       // check to see if the selected tag is already a relationship in the database
-      if (detailPost.tags.includes(userInput)) {
+      const currentTagRelationships = detailPost.tags.map(tag => tag.name);
+      if (currentTagRelationships.includes(userInput)) {
         return
       }
-
       // find the tag object from the list of Tags that matches the submitted userInput
       const tag = tags.find(tag => tag.name.toLowerCase()===userInput.toLowerCase())
       
