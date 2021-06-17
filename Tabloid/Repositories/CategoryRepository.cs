@@ -31,7 +31,14 @@ namespace Tabloid.Repositories
 
                     while (reader.Read())
                     {
-                        categories.Add(NewCategoryFromReader(reader));
+                    //checks if category with same name exists, if not add it         
+                    if (categories.Any(item => item.Name == NewCategoryFromReader(reader).Name))
+                        {
+                            
+                         }else
+                        {
+                            categories.Add(NewCategoryFromReader(reader));
+                        }
                     }
 
                     reader.Close();
@@ -74,10 +81,8 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
                             DELETE FROM Category
-                            WHERE Id = @id AND Id NOT IN(
-                                SELECT Post.CategoryId
-                                FROM Post 
-                            )
+                            WHERE Id = @id 
+                            
                         ";
 
                     cmd.Parameters.AddWithValue("@id", id);
@@ -116,8 +121,8 @@ namespace Tabloid.Repositories
                 Id = DbUtils.GetInt(reader, "CategoryId"),
                 Name = DbUtils.GetString(reader, "CategoryName")
             };
-            //checked to see if title of each row is null
-            //    set category ISUSED to false
+            //checked to see if title of each row is null, if null, category isnt being used, set isUsed to false
+           
 
             if (reader.IsDBNull("title"))
             {

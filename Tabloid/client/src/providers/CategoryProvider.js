@@ -47,7 +47,7 @@ export const CategoryProvider = (props) => {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
-    }));
+    })).then(getAllCategories())
   };
   
     
