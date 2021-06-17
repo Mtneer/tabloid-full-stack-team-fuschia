@@ -118,7 +118,9 @@ export const PostDetails = () => {
       // check to see if the selected tag is already a relationship in the database
       const currentTagRelationships = detailPost.tags.map(tag => tag.name);
       if (currentTagRelationships.includes(userInput)) {
-        return
+        setUserInput("")
+        setActiveOption(0)
+        return alert("That tag is already associated with this post.")
       }
       // find the tag object from the list of Tags that matches the submitted userInput
       const tag = tags.find(tag => tag.name.toLowerCase()===userInput.toLowerCase())
