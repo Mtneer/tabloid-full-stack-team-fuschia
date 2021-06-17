@@ -60,22 +60,15 @@ namespace Tabloid.Repositories
             }
         }
 
-        public void DeletePostTag(int postId, List<int> tagIdsToRemove)
+        public void DeletePostTag(int postTagId)
         {
-            //throw new NotImplementedException();
-            string sqlQuery = "";
-            foreach (int tagId in tagIdsToRemove)
-            {
-                sqlQuery += $"DELETE FROM PostTag WHERE PostId = {postId} AND TagId = {tagId} ";
-            }
-
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = sqlQuery;
-
+                    cmd.CommandText = @"DELETE FROM PostTag WHERE PostTag.Id = @Id";
+                    cmd.Parameters.AddWithValue("@Id", postTagId);
                     cmd.ExecuteNonQuery();
                 }
             }

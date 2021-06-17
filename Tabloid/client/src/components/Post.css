@@ -11,7 +11,41 @@
 
 /* ----------- Tag Styling -------------*/
 .badge {
+    margin: 2px 5px;
+}
+
+.flex-badge {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge-title {
     margin: 0px 5px;
+}
+
+.remove-tag-btn {
+    margin: 0 0.25em 0 0.75em;
+    padding: 0.25em;
+    font-size: 15px;
+    line-height: 1;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    color: rgb(189, 189, 189);
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.remove-tag-btn:hover {
+    font-weight: 700;
+    background-color:rgb(189, 189, 189);
+    color: black;
+    border: 1px solid darkgrey;
 }
 
 /* --- Add Tag Search Feature Styling -----*/

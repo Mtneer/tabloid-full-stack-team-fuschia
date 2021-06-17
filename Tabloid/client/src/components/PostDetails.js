@@ -14,7 +14,7 @@ export const PostDetails = () => {
     // retrieve tags state variable from TagContext so that the dropdown list of tags which match the user input into the search bar can be filtered from this state variable list (tags)
     const { tags, getAllTags } = useContext(TagContext);
     // retrieve addPostTag method from PostTagContext to be used in creating new Post Tag relationships in the database
-    const { addPostTag } = useContext(PostTagContext);
+    const { addPostTag, deletePostTag } = useContext(PostTagContext);
 
     /* State variable that keeps track of which tags in the database
     match the text in the Search bar */
@@ -135,6 +135,15 @@ export const PostDetails = () => {
       .then(setDetailPost)
     }
 
+    /* Helper function to control the deletion of a postTag relationship from the database */
+    const onClickDelete = (e) => {
+      deletePostTag(parseInt(e.currentTarget.id))
+      // Retrieve the new Post object from the database, which will not have the deleted relationship
+      .then(() => getPostById(postId))
+      // set the new Post object to the state variable
+      .then(setDetailPost)
+    }
+
     // define the TagDropdown function which will render the dropdown list conditionally based on showTagOptions (boolean), userInput (string), and filteredTags (array)
     const TagDropdown = () => {
         if (showTagOptions && userInput) {
@@ -185,14 +194,28 @@ export const PostDetails = () => {
                                 <TagDropdown />
                               </div>
                             </div>
-                          : <div></div>
+                          : <></>
                         }
                     </div>
                     <div className="row badge-row">
                       {
                         // display the post's tags as pill badges
-                        detailPost.tags?.map(tag => { 
-                          return <Badge className="badge" color="info" key={tag.id}>{tag.name}</Badge>
+                        detailPost.tags?.map(postTag => { 
+                          return (
+                              <Badge className="badge" color="info" key={postTag.postTagId} id={postTag.postTagId}>
+                                <div className="flex-badge">
+                                  <div className="badge-title">
+                                    {postTag.name}
+                                  </div>
+                                  {
+                                    /* if the post was authored by the current logged in user, present them with the option to delete a tag from their post */
+                                    (isCurrentUserPost) ?
+                                      <button className="remove-tag-btn" id={postTag.postTagId} onClick={onClickDelete}>X</button> :
+                                      <></>
+                                  }
+                                </div>
+                              </Badge>
+                          )  
                         })
                       }
                     </div>
