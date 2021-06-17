@@ -92,6 +92,67 @@ namespace Tabloid.Repositories
             }
         }
 
+        public Category GetById(int id)
+        {
+            // Define a variable to identify the database connection
+            // ("Connection" comes from the BaseRepository.cs)
+            using (var conn = Connection)
+            {
+                conn.Open();
+                // Open the connection to the database.
+                using (var cmd = conn.CreateCommand())
+                {
+                    // Instantiate a variable called cmd to use as short-hand for defining the SQL query.
+                    cmd.CommandText = @"
+                       SELECT  Id as CategoryId, Name as CategoryName
+                              
+                         FROM Category 
+                              WHERE Id = @id";
+                    // Attach the UserId parameter to the SQL Query using SQLConnection provided methods
+                    cmd.Parameters.AddWithValue("@id", id);
+                    // Execute the Query
+                    var reader = cmd.ExecuteReader();
+
+                    Category category = null;
+
+                    while (reader.Read())
+                    {
+                        if (category == null)
+                        {
+                            category = NewCategoryFromReader(reader);
+                        }
+
+                        
+                    }
+
+                    reader.Close();
+
+                    return category;
+                }
+            }
+        }
+
+        public void Edit(Category category)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Category
+                                        SET Name = @name
+                                            
+                                        WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", category.Id);
+                    cmd.Parameters.AddWithValue("@name", category.Name);
+                    
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void CheckUsed(int id)
         {
             using (SqlConnection conn = Connection)
@@ -122,16 +183,23 @@ namespace Tabloid.Repositories
                 Name = DbUtils.GetString(reader, "CategoryName")
             };
             //checked to see if title of each row is null, if null, category isnt being used, set isUsed to false
-           
 
-            if (reader.IsDBNull("title"))
+            try
             {
-                ThisCategory.IsUsed = false;
+                if (reader.IsDBNull("title"))
+                {
+                    ThisCategory.IsUsed = false;
+                }
+                else
+                {
+                    ThisCategory.IsUsed = true;
+                }
             }
-            else
+            catch (Exception e)
             {
-                ThisCategory.IsUsed = true;
+                //  Block of code to handle errors
             }
+            
 
             return ThisCategory;
 

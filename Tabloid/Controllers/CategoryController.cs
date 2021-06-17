@@ -30,11 +30,19 @@ namespace Tabloid.Controllers
             return Ok(_categoryRepository.GetAll());
         }
 
-        // GET api/<CategoryController>/5
+        // This method is for Category DETAILS for edit form page.
+        // It GETs a category from the database by the CategoryId
+        // GET api/<PostController>/Details/id
+        //[HttpGet("Details/{id}")]
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var category = _categoryRepository.GetById(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
         }
 
         // POST api/<CategoryController>
@@ -46,9 +54,11 @@ namespace Tabloid.Controllers
         }
 
         // PUT api/<CategoryController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put(Category category)
         {
+            _categoryRepository.Edit(category);
+            return NoContent();
         }
 
         // DELETE api/<CategoryControllercs>/5
