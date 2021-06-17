@@ -4,7 +4,6 @@ import { TagContext } from "../../providers/TagProvider";
 
 export const TagForm = () => {
   //exposing the addTag function from the TagProdiver
-<<<<<<< HEAD
   const { addTag, editTag, getTagById } = useContext(TagContext);
   // setting tagInput to an empty state so we can add in the new tag information
   const [tagInput, setTagInput] = useState({});
@@ -24,11 +23,6 @@ export const TagForm = () => {
       setIsLoading(false)
     }
   }, []);
-=======
-  const { addTag } = useContext(TagContext);
-  // setting tagInput to an empty state so we can add in the new tag information
-  const [tagInput, setTagInput] = useState({});
->>>>>>> main
 
   //update state when a field changes; the return will re-render and display based on the values in state
   const handleControlledInputChange = (event) => {
@@ -43,19 +37,18 @@ export const TagForm = () => {
   const handleClickAddTag = (event) => {
       event.preventDefault();
       setIsLoading(true);
-      //debugger
       if(tagId){
-        //debugger
         editTag({
           Id: parseInt(tagId),
           Name: tagInput.name
         })
         .then(() => history.push(`/tags`))
-      }
-      addTag({
+      } else {
+        addTag({
           name: tagInput.name
     })
     .then(() => history.push("/tags"))
+    }
   }
   
   return (
@@ -64,14 +57,16 @@ export const TagForm = () => {
     <fieldset>
         <div className="form-group">
             <label htmlFor="title">Tag Name:</label>
-            <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="" value={tagInput?.name} />
+            <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="" value={tagInput.name} />
         </div>
     </fieldset>
     
     <button className="btn btn-primary"
-        onClick={handleClickAddTag}>
-        Save Tag
+        onClick={handleClickAddTag}
+        disable={isLoading.toString()}>
+        {tagId ? <>Save Tag</> : <>Add Tag</>}
         </button>
+        <button className="button btn btn-sm btn-secondary" onClick={() => {history.push("/tags")}}>Cancel</button>
     </form>
   );
 }

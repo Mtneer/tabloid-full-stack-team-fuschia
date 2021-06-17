@@ -46,6 +46,7 @@ export const TagProvider = (props) => {
     }
 
     const getTagById = (tagId) => {
+      //debugger
       return getToken().then((token) =>
           fetch(`${apiUrl}/${tagId}`, {
               method: "GET",
@@ -59,10 +60,10 @@ export const TagProvider = (props) => {
   // Provider method to edit a tag by sending a PUT request based on a Tag Object
   // to the Web API with a firebase Token for authentication.
   const editTag = (tag) => {
-    // debugger
+    debugger
     return getToken().then((token) => {
-        // debugger
-        fetch(apiUrl, {
+        debugger
+        fetch(`${apiUrl}/${tag.Id}`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`,
