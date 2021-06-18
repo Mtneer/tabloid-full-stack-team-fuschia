@@ -8,9 +8,7 @@ export const PostTagProvider = (props) => {
   const { getToken } = useContext(UserProfileContext);
 
   const addPostTag = (postTag) => {
-    // debugger
     return getToken().then((token) => {
-        // debugger
       fetch(apiUrl, {
             method: "POST",
             headers: {
@@ -22,11 +20,10 @@ export const PostTagProvider = (props) => {
     })
   };
 
-  // Provider method to delete a post by sending a DELETE request based on a Post's ID
-  // to the Web API with a firebase Token for authentication.
-  const deletePostTag = (postId) => {
-    getToken().then((token) =>
-        fetch(`${apiUrl}/${postId}`, {
+  /* Provider method to delete a post by sending a DELETE request based on a PostTag's ID to the Web API with a firebase Token for authentication. */
+  const deletePostTag = (postTagId) => {
+    return getToken().then((token) =>
+        fetch(`${apiUrl}/${postTagId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,

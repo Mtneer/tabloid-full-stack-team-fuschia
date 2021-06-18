@@ -23,13 +23,6 @@ namespace Tabloid.Controllers
             _postTagRepository = postTagRepository;
         }
 
-        // GET: api/<PostTagController>
-        [HttpGet("{postId}")]
-        public IActionResult Get(int postId)
-        {
-            return Ok(_postTagRepository.GetPostTags(postId));
-        }
-
         // POST api/<PostTagController>
         [HttpPost]
         public IActionResult Post(PostTag postTag)
@@ -38,16 +31,12 @@ namespace Tabloid.Controllers
             return NoContent();
         }
 
-        // PUT api/<PostTagController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
         // DELETE api/<PostTagController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{postTagId}")]
+        public IActionResult Delete(int postTagId)
         {
+            _postTagRepository.DeletePostTag(postTagId);
+            return NoContent();
         }
     }
 }

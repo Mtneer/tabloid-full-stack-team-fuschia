@@ -73,6 +73,7 @@ namespace Tabloid.Repositories
                               u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
                               ut.[Name] AS UserTypeName,
+                              pt.Id as PostTagId,
                               t.Id AS TagId, t.[Name] AS TagName
                          FROM Post p
                               LEFT JOIN Category c ON p.CategoryId = c.id
@@ -102,6 +103,7 @@ namespace Tabloid.Repositories
                             {
                                 Id = DbUtils.GetInt(reader, "TagId"),
                                 Name = DbUtils.GetString(reader, "TagName"),
+                                PostTagId = DbUtils.GetInt(reader, "PostTagId")
                             });
                         }
                     }
