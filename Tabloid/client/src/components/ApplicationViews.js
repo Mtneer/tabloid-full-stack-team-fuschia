@@ -77,7 +77,14 @@ export default function ApplicationViews() {
           {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
         </Route>
 
-        {/*-----------------CATEGORY ROUTES--------------------*/}
+        <Route exact path="/tag/edit/:tagId(\d+)">
+          {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
+        </Route>
+
+        
+        
+
+       {/*-----------------CATEGORY ROUTES--------------------*/} 
 
         <Route exact path="/categories">
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}

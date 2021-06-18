@@ -1,13 +1,28 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { TagContext } from "../../providers/TagProvider";
 
 export const TagForm = () => {
-  const history = useHistory();
   //exposing the addTag function from the TagProdiver
-  const { addTag } = useContext(TagContext);
+  const { addTag, editTag, getTagById } = useContext(TagContext);
   // setting tagInput to an empty state so we can add in the new tag information
   const [tagInput, setTagInput] = useState({});
+  const {tagId} = useParams();
+  const history = useHistory();
+  // wait for data before button is active
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if(tagId){
+      getTagById(tagId)
+      .then(tag => {
+        setTagInput(tag)
+        setIsLoading(false)
+      })
+    } else {
+      setIsLoading(false)
+    }
+  }, []);
 
   //update state when a field changes; the return will re-render and display based on the values in state
   const handleControlledInputChange = (event) => {
@@ -20,13 +35,20 @@ export const TagForm = () => {
   }
 
   const handleClickAddTag = (event) => {
-    //prevents the browser from submitting the form  
-    event.preventDefault()
-    //uses the addTag function from the provider page  
-    addTag({
+      event.preventDefault();
+      setIsLoading(true);
+      if(tagId){
+        editTag({
+          Id: parseInt(tagId),
+          Name: tagInput.name
+        })
+        .then(() => history.push(`/tags`))
+      } else {
+        addTag({
           name: tagInput.name
     })
     .then(() => history.push("/tags"))
+    }
   }
   
   return (
@@ -35,14 +57,16 @@ export const TagForm = () => {
     <fieldset>
         <div className="form-group">
             <label htmlFor="title">Tag Name:</label>
-            <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="" value={tagInput?.name} />
+            <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="" value={tagInput.name} />
         </div>
     </fieldset>
     
     <button className="btn btn-primary"
-        onClick={handleClickAddTag}>
-        Save Tag
+        onClick={handleClickAddTag}
+        disable={isLoading.toString()}>
+        {tagId ? <>Save Tag</> : <>Add Tag</>}
         </button>
+        <button className="button btn btn-sm btn-secondary" onClick={() => {history.push("/tags")}}>Cancel</button>
     </form>
   );
 }
