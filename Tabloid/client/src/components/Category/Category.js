@@ -23,7 +23,8 @@ export const Category = ({ category }) => {
       " "
       :
       <Button onClick={() => {history.push(`/categories/delete/${category.id}`)}}>Delete</Button> 
-}
+      }
+      <Button onClick={() => {history.push(`/categories/edit/${category.id}`)}}>Edit</Button>
     </Card>
   );
 }

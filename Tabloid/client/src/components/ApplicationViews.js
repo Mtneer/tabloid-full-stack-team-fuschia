@@ -87,6 +87,10 @@ export default function ApplicationViews() {
           {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
         </Route>
 
+        <Route exact path="/categories/edit/:categoryId(\d+)">
+          {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
+        </Route>
+
         <Route exact path="/categories/delete/:categoryId">
           {isLoggedIn ? <ConfirmDeleteCategory /> : <Redirect to="/login" />}
         </Route>
