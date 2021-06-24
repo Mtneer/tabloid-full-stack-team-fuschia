@@ -5,7 +5,7 @@
   - [Local Installation](#local-installation)
   - [Usage](#usage)
      - [Posts](#posts)
-     - [My Posts](#my posts)
+     - [MyPosts](#myposts)
      - [Categories](#categories)
      - [Tags](#tags)
 
@@ -56,7 +56,7 @@ Tabloid is comprised of three sections:
 ### Posts
 Posts presents the user with a scrollable list of recent posts from the community. Users can browse posts and click on the title to view additional details about a given post.
 
-### My Posts
+### MyPosts
 My Posts presents the user with a list of their posts. Users can click on the title to view additional details about a given post, edit a post, delete a post, or manage the tags associated with each post.
 
 ### Categories
